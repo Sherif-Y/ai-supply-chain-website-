@@ -1,0 +1,3 @@
+# Netlify settings: publish the live site from the site/ folder (no build step).
+[build]
+  publish = "site"
