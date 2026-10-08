@@ -1,3 +1,8 @@
 .DS_Store
 ux-prototype/share/
 __pycache__/
+# Original photos stay local; the web versions live in ux-prototype/images/
+/*.jpeg
+/*.jpg
+/*.png
+/*.heic

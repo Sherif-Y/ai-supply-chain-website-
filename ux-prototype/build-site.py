@@ -3,6 +3,7 @@
 # Live-only changes: real page title and description, design notes hidden,
 # and (for now) hidden from search engines. Set NOINDEX = False to allow indexing.
 import os
+import shutil
 
 NOINDEX = True
 TITLE = 'Applied Chain'
@@ -22,4 +23,8 @@ out = out.replace('</style>', '.notes-toggle, .note { display: none !important; 
 dest = os.path.join(os.path.dirname(here), 'site', 'index.html')
 os.makedirs(os.path.dirname(dest), exist_ok=True)
 open(dest, 'w').write(out)
+# Images the page uses (e.g. images/sherif.jpg) are copied next to it.
+img_src = os.path.join(here, 'images')
+if os.path.isdir(img_src):
+    shutil.copytree(img_src, os.path.join(os.path.dirname(dest), 'images'), dirs_exist_ok=True)
 print(f'wrote {dest} ({len(out):,} bytes)')
