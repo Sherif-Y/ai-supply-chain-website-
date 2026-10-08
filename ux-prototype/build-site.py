@@ -7,7 +7,7 @@ import shutil
 
 NOINDEX = True
 TITLE = 'Applied Chain'
-DESCRIPTION = 'Hire an AI workforce for your supply chain: AI planners and analysts that work in your tools and prepare decisions for your team.'
+DESCRIPTION = 'Hire AI planners for your supply chain: AI planners and analysts that work in your tools and prepare decisions for your team.'
 
 here = os.path.dirname(os.path.abspath(__file__))
 src = open(os.path.join(here, 'index-v2.html')).read()
