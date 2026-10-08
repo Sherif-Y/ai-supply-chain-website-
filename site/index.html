@@ -654,19 +654,19 @@ body.notes .note { display: block; }
       <div class="hero-meta reveal" style="--rd:.32s"><span>Start with one role in 6–8 weeks</span><span>Works in Slack, Teams, your ERP and TMS</span><span>A person approves every action</span></div>
       <div class="note"><b>Design note · Hero.</b> Headline options to compare (click to swap):<br>
         <button class="on" data-h="0">A · Hire AI planners</button><button data-h="1">B · Not another dashboard</button><button data-h="2">C · Team stays in charge</button><br>
-        The chat on the right is a short loop of the "AI planner in team chat" demo: a question, Nova's answer, a draft, an approval.</div>
+        The chat on the right is a short loop of the "AI planner in team chat" demo: Nova flags a demand spike, offers expedite options, Dan picks one and approves.</div>
     </div>
     <div class="hero-chat reveal" style="--rd:.2s">
       <div class="hc" id="hc" aria-label="Example: a planner asks an AI supply planner about stock in team chat">
         <div class="hc-head"><b># supply-planning</b><span><i class="hc-dot"></i>Nova · Supply Planner AI is online</span></div>
         <div class="hc-body">
-          <div class="sm hc-i" data-i="0"><span class="ava" style="background:#5b6ee1">PN</span><div><div class="who">Priya N.<time>9:02 AM</time></div><div class="txt"><span class="mention">@Nova</span> anything I should worry about at West DC today?</div></div></div>
-          <div class="sm hc-i" data-i="1"><span class="ava" style="background:#0f6b4f">N</span><div><div class="who">Nova · Supply Planner AI<em>APP</em><time>9:02 AM</time></div><div class="txt">2 SKUs will run out before a new order can land:</div>
-            <div class="blk"><table><tbody><tr><td>Bluetooth Speaker</td><td class="num">1 day left</td><td><span class="st st-crit">Critical</span></td></tr><tr><td>USB-C Cable</td><td class="num">2 days left</td><td><span class="st st-crit">Critical</span></td></tr></tbody></table></div></div></div>
-          <div class="sm hc-i" data-i="2"><span class="ava" style="background:#5b6ee1">PN</span><div><div class="who">Priya N.<time>9:03 AM</time></div><div class="txt">Draft reorders for both, please.</div></div></div>
-          <div class="sm hc-i" data-i="3"><span class="ava" style="background:#0f6b4f">N</span><div><div class="who">Nova · Supply Planner AI<em>APP</em><time>9:03 AM</time></div><div class="txt">Done: 2 draft POs to SoundCo and CableCo, ready for your approval.</div>
-            <div class="acts"><button class="pri hc-btn" type="button" tabindex="-1">Approve both</button><button type="button" tabindex="-1">Why these quantities?</button></div>
-            <div class="hc-ok">✓ Approved by Priya · POs sent to suppliers</div></div></div>
+          <div class="sm hc-i" data-i="0"><span class="ava" style="background:#0f6b4f">N</span><div><div class="who">Nova · Supply Planner AI<em>APP</em><time>8:00 AM</time></div><div class="txt">Heads-up <span class="mention">@Priya</span>: Bluetooth Speaker demand is <b>33% above forecast</b>. West DC runs out in <b>3 days</b>.</div></div></div>
+          <div class="sm hc-i" data-i="1"><span class="ava" style="background:#0f6b4f">N</span><div><div class="who">Nova · Supply Planner AI<em>APP</em><time>8:01 AM</time></div><div class="txt">At the standard 14-day lead time we'd be <b>out of stock for 11 days</b>. <span class="mention">@Dan</span> can SoundCo expedite?</div>
+            <div class="blk"><table><tbody><tr><td>A · Standard</td><td class="num">11 days out</td><td class="num">none</td></tr><tr><td><b>B · Expedite</b></td><td class="num"><b>4 days out</b></td><td class="num"><b>+$1,900</b></td></tr><tr><td>C · Partly by air</td><td class="num">1 day out</td><td class="num">+$2,600</td></tr></tbody></table></div></div></div>
+          <div class="sm hc-i" data-i="2"><span class="ava" style="background:#c47a12">DK</span><div><div class="who">Dan K.<time>8:09 AM</time></div><div class="txt">SoundCo can expedite. <span class="mention">@Nova</span> go with B.</div></div></div>
+          <div class="sm hc-i" data-i="3"><span class="ava" style="background:#0f6b4f">N</span><div><div class="who">Nova · Supply Planner AI<em>APP</em><time>8:09 AM</time></div><div class="txt">PO-4512 ready: 960 speakers, expedited, lands Oct 19.</div>
+            <div class="acts"><button class="pri hc-btn" type="button" tabindex="-1">Approve PO</button><button type="button" tabindex="-1">Edit</button></div>
+            <div class="hc-ok">✓ Approved by Dan · PO sent to SoundCo</div></div></div>
         </div>
         <div class="hc-typing" id="hcTyping">&nbsp;</div>
       </div>
@@ -1341,43 +1341,46 @@ const SK_PEOPLE = {
   you: { name: 'You', ini: 'You', color: '#7a8782' },
 };
 const MENTION = '<span class="mention">@Nova</span>';
-const SPK = RS_SKUS[2], EAST_ON_HAND = 900, BRIDGE = 360, BRIDGE_DAYS = 2;
-let sk = { lead: 10, bridge: false, qty: null, approved: false }, skStep = 0, skPlaying = false, skTimer = null, skGen = 0, skStarted = false;
+// Scenario: demand runs above forecast, the SKU will stock out before a standard-lead-time order lands, Nova offers expedite options.
+const SC = { item: 'Bluetooth Speaker', onHand: 120, rate: 40, forecast: 30, unit: 22, qty: 960, stdLead: 14 };
+SC.daysLeft = Math.floor(SC.onHand / SC.rate);
+const OPTS = {
+  A: { label: 'Standard', lead: SC.stdLead, extra: 0, note: 'standard' },
+  B: { label: 'Expedited production', lead: 7, extra: 1900, note: 'expedited' },
+  C: { label: '300 by air, rest standard', lead: 4, extra: 2600, note: '300 by air, 660 standard' },
+};
+let sk = { lead: SC.stdLead, opt: null, qty: null, approved: false }, skStep = 0, skPlaying = false, skTimer = null, skGen = 0, skStarted = false;
+const outDays = (lead) => Math.max(0, lead - SC.daysLeft);
+const dd = (n) => `${n} day${n === 1 ? '' : 's'}`;
+const optLead = (k) => (k === 'A' ? sk.lead : OPTS[k].lead);
 
-const skInv = () => {
-  const rows = RS_SKUS.map((s) => ({ s, r: restock(s) })).sort((a, b) => rank[a.r.status] - rank[b.r.status]);
-  return `<p>West DC, as of 9:00 today. <b>Two SKUs will run out before a new order can land:</b> Bluetooth Speaker and USB-C Cable. Phone Case is already out of stock.</p>
-    <div class="blk"><table><thead><tr><th>SKU</th><th class="num">On hand</th><th class="num">Days left</th><th class="num">Lead time</th><th>Status</th></tr></thead><tbody>
-    ${rows.map(({ s, r }) => `<tr><td>${s.name}</td><td class="num">${n0(s.inv)}</td><td class="num">${r.days}</td><td class="num">${s.lead} d</td><td>${badge(r.status)}</td></tr>`).join('')}</tbody></table></div>`;
-};
-const skReco = () => {
-  const r = restock(SPK, { lead: sk.lead }), qty = sk.qty ?? r.qty, cost = qty * SPK.cost;
-  const outBridged = Math.max(0, Math.round(BRIDGE_DAYS - SPK.inv / SPK.d));
-  const intro = sk.lead === SPK.lead
-    ? `<p>Recommended order to <b>SoundCo</b>, our upstream supplier for speakers:</p>`
-    : `<p>Re-ran it with a <b>${sk.lead}-day</b> lead time. The order goes up, and we'd be out of stock for about <b>${r.out} days</b> before it lands.</p>`;
-  const bridge = sk.bridge ? `<div class="blk warn"><h5>Bridge the gap: transfer from DC East</h5><div class="kvl"><span>Move</span><b>${BRIDGE} speakers, DC East → DC West</b><span>DC East</span><b>${n0(EAST_ON_HAND)} on hand, 30 days of cover</b><span>Arrives</span><b>${dateIn(BRIDGE_DAYS)} (${BRIDGE_DAYS} days)</b><span>Effect</span><b>Out-of-stock drops from ${r.out} days to about ${outBridged}</b></div></div>` : '';
-  return `${intro}<div class="blk"><h5>Purchase order · SoundCo</h5><div class="kvl"><span>Item</span><b>Bluetooth Speaker (SKU-003)</b><span>Quantity</span><b>${n0(qty)} units</b><span>Cost</span><b>${money(cost)} at $${SPK.cost.toFixed(2)}</b><span>Lead time</span><b>${sk.lead} days, lands ${dateIn(sk.lead)}</b></div>
-    <div class="acts"><button class="pri" type="button" data-sk="approve">${sk.bridge ? 'Approve PO + transfer' : 'Approve and send PO'}</button><button type="button" data-sk="why">Why ${n0(qty)}?</button><button type="button" data-sk="adjust">Adjust quantity</button></div></div>${bridge}`;
-};
-const skWhy = () => { const r = restock(SPK, { lead: sk.lead }); return `Speakers sell <b>30 a day</b>. We cover the ${r.lead}-day lead time, 5 safety days and 14 days until the next order: <code>30 × (${r.lead} + 5 + 14) − 45 on hand = ${n0(r.qty)}</code>`; };
-const skConfirm = () => { const r = restock(SPK, { lead: sk.lead }), qty = sk.qty ?? r.qty;
-  return `<p>Done. Both are in the ERP:</p><div class="blk"><div class="kvl"><span>✓ PO-4512</span><b>${n0(qty)} speakers to SoundCo, ${money(qty * SPK.cost)}, lands ${dateIn(sk.lead)}</b>${sk.bridge ? `<span>✓ TR-0881</span><b>${BRIDGE} speakers DC East → DC West, arrives ${dateIn(BRIDGE_DAYS)}</b>` : ''}</div></div><p>I'll post here when SoundCo confirms.</p>`; };
+const skAlert = () => `<p>Heads-up <span class="mention">@Priya</span>: demand for <b>${SC.item}</b> is running <b>${Math.round((SC.rate / SC.forecast - 1) * 100)}% above forecast</b>. At this pace, West DC runs out in <b>${SC.daysLeft} days</b>.</p>
+  <div class="blk warn"><div class="kvl"><span>Selling</span><b>${SC.rate} a day (forecast ${SC.forecast})</b><span>On hand</span><b>${SC.onHand} units</b><span>Runs out</span><b>${dateIn(SC.daysLeft)}, in ${SC.daysLeft} days</b></div></div>`;
+const skOptions = () => `<p>I recommend a PO to SoundCo for <b>${n0(SC.qty)} units</b>. At their ${sk.lead === SC.stdLead ? 'standard ' : ''}${sk.lead}-day lead time it lands ${dateIn(sk.lead)}, so we'd be <b>out of stock for ${dd(outDays(sk.lead))}</b>. <span class="mention">@Dan</span> can SoundCo expedite production? Options:</p>
+  <div class="blk"><table><thead><tr><th>Option</th><th class="num">Lands</th><th class="num">Out of stock</th><th class="num">Extra cost</th></tr></thead><tbody>
+  ${['A', 'B', 'C'].map((k) => `<tr><td>${k} · ${OPTS[k].label}</td><td class="num">${dateIn(optLead(k))}</td><td class="num">${dd(outDays(optLead(k)))}</td><td class="num">${OPTS[k].extra ? money(OPTS[k].extra) : 'none'}</td></tr>`).join('')}</tbody></table>
+  <div class="acts"><button type="button" data-sk="opt" data-o="A">Go with A</button><button class="pri" type="button" data-sk="opt" data-o="B">Go with B</button><button type="button" data-sk="opt" data-o="C">Go with C</button><button type="button" data-sk="why">Why ${n0(SC.qty)}?</button></div></div>`;
+const skPO = () => { const k = sk.opt || 'B', o = OPTS[k], qty = sk.qty ?? SC.qty;
+  return `<p>PO ready for your approval:</p><div class="blk"><div class="kvl"><span>PO-4512</span><b>${n0(qty)} speakers · SoundCo · ${o.note}</b><span>Cost</span><b>${money(qty * SC.unit)}${o.extra ? ` + ${money(o.extra)} ${k === 'C' ? 'air freight' : 'rush fee'}` : ''}</b><span>Lands</span><b>${dateIn(optLead(k))} · out of stock ${dd(outDays(optLead(k)))}</b></div>
+    <div class="acts"><button class="pri" type="button" data-sk="approve">Approve PO</button><button type="button" data-sk="why">Why ${n0(qty)}?</button><button type="button" data-sk="adjust">Adjust quantity</button></div></div>`; };
+const skWhy = () => `${n0(SC.qty)} units = <b>${SC.rate} a day × ${SC.qty / SC.rate} days</b>: the ${SC.stdLead}-day lead time plus ${SC.qty / SC.rate - SC.stdLead} days until the next order. It uses the new run rate of ${SC.rate} a day, not the old forecast of ${SC.forecast}.`;
+const skConfirm = () => { const k = sk.opt || 'B', qty = sk.qty ?? SC.qty;
+  return `<p>Done: <b>PO-4512</b> is sent to SoundCo (${n0(qty)} speakers, ${OPTS[k].note}, lands ${dateIn(optLead(k))}). I've updated the forecast to ${SC.rate} a day and will track daily sales against it.</p>`; };
 
 const SK_STORY = [
-  { title: 'Ask in the channel', text: 'Priya @mentions Nova in the planning channel instead of opening another tool.', state: { lead: 10, bridge: false },
-    msgs: () => [['priya', `${MENTION} how do inventory levels look for our top SKUs at West DC?`, '9:02 AM'], ['wilson', skInv(), '9:02 AM']] },
-  { title: 'Get a recommendation', text: 'The buyer joins the thread. Nova drafts the upstream order with an approve button.', state: { lead: 10, bridge: false },
-    msgs: () => [['dan', `Speakers are the urgent one. ${MENTION} what should we order from SoundCo?`, '9:05 AM'], ['wilson', skReco(), '9:05 AM']] },
-  { title: 'Decide together', text: 'New information arrives. Nova re-plans and suggests a transfer to bridge the gap.', state: { lead: 14, bridge: true },
-    msgs: () => [['priya', `SoundCo just emailed: lead time is <b>14 days</b> this month, not 10. ${MENTION} can you re-run it?`, '9:11 AM'], ['wilson', skReco(), '9:11 AM']] },
-  { title: 'Approve in one click', text: 'Dan approves from the message. The PO goes upstream and the transfer is booked.', state: { lead: 14, bridge: true, approved: true },
-    msgs: () => [['dan', 'Looks right. Approving both.', '9:14 AM'], ['wilson', skConfirm(), '9:14 AM', '<div class="reacts"><span>✅ 2</span><span>🙌 1</span></div>']] },
-  { title: 'Follow-up, next morning', text: 'Nova closes the loop in the same thread. Everyone sees the decision and the outcome.', state: { lead: 14, bridge: true, approved: true },
-    msgs: () => [['day', 'Tuesday, October 13'], ['wilson', `SoundCo confirmed <b>PO-4512</b>: ships to land ${dateIn(14)}. Transfer TR-0881 is on the truck and arrives today. Speakers stay in stock until the order lands.`, '8:15 AM']] },
+  { title: 'Nova raises an alert', text: 'Demand jumps above forecast. Nova flags the stock-out risk in the planning channel before anyone asks.', state: {},
+    msgs: () => [['wilson', skAlert(), '8:00 AM']] },
+  { title: 'Recommend and ask', text: 'Nova recommends a PO, shows the stock-out at the standard lead time, and asks if production can expedite.', state: {},
+    msgs: () => [['wilson', skOptions(), '8:01 AM']] },
+  { title: 'Check with the supplier', text: 'Dan checks with SoundCo and picks an option in the thread. Nova prepares the PO.', state: { opt: 'B' },
+    msgs: () => [['dan', `Checked with SoundCo: they can expedite. ${MENTION} go with option B.`, '8:09 AM'], ['wilson', skPO(), '8:09 AM']] },
+  { title: 'Approve in one click', text: 'Dan approves from the message. Nova sends the PO upstream and updates the forecast.', state: { opt: 'B', approved: true },
+    msgs: () => [['dan', 'Approved.', '8:10 AM'], ['wilson', skConfirm(), '8:10 AM', '<div class="reacts"><span>✅ 2</span><span>🙌 1</span></div>']] },
+  { title: 'Follow-up, next morning', text: 'Nova closes the loop in the same thread. Everyone sees the decision and the outcome.', state: { opt: 'B', approved: true },
+    msgs: () => [['day', 'Tuesday, October 13'], ['wilson', `SoundCo confirmed <b>PO-4512</b>: expedited, lands ${dateIn(7)}. Yesterday's sales were 41, in line with the new forecast of ${SC.rate} a day.`, '8:15 AM']] },
 ];
-const SK_DUR = [7500, 8000, 9500, 7500, 7500];
-const SK_SUGGEST = ['@Nova what if lead time is 7 days?', '@Nova why that number?', '@Nova how is the USB-C cable?', '@Nova make it 1,000 units'];
+const SK_DUR = [7500, 10000, 8500, 7500, 7500];
+const SK_SUGGEST = ['@Nova why 960 units?', '@Nova go with option C', '@Nova what if lead time is 10 days?', '@Nova make it 1,200 units'];
 $('#skSuggest').innerHTML = SK_SUGGEST.map((q) => `<button class="chip-l" type="button" data-skq="${q}">${q}</button>`).join('');
 $('#skDots').innerHTML = SK_STORY.map((_, i) => `<button aria-label="Step ${i + 1}" data-s="${i}"></button>`).join('');
 
@@ -1410,8 +1413,8 @@ async function skShow(n, animate = true) {
   const cur = $('#skDots .cur'); if (cur) { cur.style.animation = 'none'; cur.offsetWidth; cur.style.animation = ''; }
   skSchedule();
   $('#skLog').innerHTML = ''; $('#skTyping').textContent = '';
-  for (let i = 0; i < n; i++) { sk = { qty: null, approved: false, ...SK_STORY[i].state }; SK_STORY[i].msgs().forEach(([w, h, t, x]) => skAdd(w, h, t, x)); }
-  sk = { qty: null, approved: false, ...S.state };
+  for (let i = 0; i < n; i++) { sk = { lead: SC.stdLead, opt: null, qty: null, approved: false, ...SK_STORY[i].state }; SK_STORY[i].msgs().forEach(([w, h, t, x]) => skAdd(w, h, t, x)); }
+  sk = { lead: SC.stdLead, opt: null, qty: null, approved: false, ...S.state };
   for (const [w, h, t, x] of S.msgs()) await skSay(w, h, t, x, g, animate);
 }
 function skSchedule() {
@@ -1432,15 +1435,18 @@ async function skAsk(text, who = 'you') {
   const shown = text.replace(/</g, '&lt;').replace(/@nova/i, MENTION);
   skAdd(who, /@nova/i.test(text) ? shown : `${MENTION} ${shown}`, 'now');
   const num = (t.replace(/,/g, '').match(/\d+/) || [])[0], n = num ? +num : null;
-  const hit = SKU_WORDS.findIndex((re) => re.test(t));
+  const hit = SKU_WORDS.findIndex((re) => re.test(t)), opt = (t.match(/option\s*([abc])\b|with\s+([abc])\b/) || []).slice(1).find(Boolean);
   let reply;
   if (/why|how did|explain|that number/.test(t)) reply = skWhy();
+  else if (opt) { sk.opt = opt.toUpperCase(); reply = skPO(); }
   else if (/approve|go ahead|send (it|the po)|place/.test(t)) { sk.approved = true; reply = skConfirm(); }
-  else if (/lead|days/.test(t) && n) { sk.lead = Math.max(1, Math.min(30, n)); sk.qty = null; sk.bridge = restock(SPK, { lead: sk.lead }).out > 3; reply = skReco(); }
-  else if (/make it|order|units|qty|quantity/.test(t) && n) { sk.qty = Math.ceil(n); const r = restock(SPK, { lead: sk.lead }); reply = `Updated to <b>${n0(sk.qty)} units</b> (${money(sk.qty * SPK.cost)}). That's ${sk.qty >= r.qty ? `${n0(sk.qty - r.qty)} more` : `${n0(r.qty - sk.qty)} fewer`} than recommended, about ${Math.round(Math.abs(sk.qty - r.qty) / SPK.d)} days of sales.` + skReco(); }
-  else if (hit >= 0) { const s = RS_SKUS[hit], r = restock(s); reply = `${s.name} at West DC: ${badge(r.status)} ${n0(s.inv)} on hand, ${r.days} days left, ${s.lead}-day lead time from ${s.supplier}. ${r.qty ? `I'd order <b>${n0(r.qty)}</b> (${money(r.cash)}).` : 'No order needed yet.'}`; }
-  else if (/inventory|stock|levels/.test(t)) reply = skInv();
-  else reply = `I can check inventory, recommend an order, re-run it with a new lead time or quantity, explain a number, or send a PO for approval. Try "@Nova what if lead time is 7 days?"`;
+  else if (/lead|days/.test(t) && n) { sk.lead = Math.max(1, Math.min(30, n)); reply = `At a ${sk.lead}-day lead time the standard order lands ${dateIn(sk.lead)}, so we'd be out of stock for <b>${dd(outDays(sk.lead))}</b>.` + skOptions(); }
+  else if (/make it|order|units|qty|quantity/.test(t) && n) { sk.qty = Math.ceil(n); reply = `Updated to <b>${n0(sk.qty)} units</b>, about ${Math.round(sk.qty / SC.rate)} days of sales at ${SC.rate} a day.` + skPO(); }
+  else if (/expedite|options?/.test(t)) reply = skOptions();
+  else if (/demand|forecast|sales|selling/.test(t)) reply = skAlert();
+  else if (hit >= 0 && hit !== 2) { const s = RS_SKUS[hit], r = restock(s); reply = `${s.name} at West DC: ${badge(r.status)} ${n0(s.inv)} on hand, ${r.days} days left, ${s.lead}-day lead time from ${s.supplier}. ${r.qty ? `I'd order <b>${n0(r.qty)}</b> (${money(r.cash)}).` : 'No order needed yet.'}`; }
+  else if (/inventory|stock|levels|speaker/.test(t)) reply = skAlert();
+  else reply = `I can explain the stock-out risk, compare expedite options, re-run with a different lead time or quantity, or send the PO for approval. Try "@Nova go with option C".`;
   await skSay('wilson', reply, 'now', '', g, true);
 }
 $('#skForm').addEventListener('submit', (e) => { e.preventDefault(); const q = $('#skQ').value.trim(); if (q) { $('#skQ').value = ''; skAsk(q); } });
@@ -1449,6 +1455,7 @@ $('#skLog').addEventListener('click', (e) => {
   const b = e.target.closest('[data-sk]'); if (!b) return;
   const act = b.dataset.sk;
   if (act === 'approve') { b.disabled = true; skAsk('Approve it', 'you'); }
+  else if (act === 'opt') skAsk(`Go with option ${b.dataset.o}`);
   else if (act === 'why') skAsk('Why that number?');
   else if (act === 'adjust') { skPause(); $('#skQ').value = '@Nova make it '; $('#skQ').focus(); }
 });
@@ -1583,9 +1590,9 @@ new IntersectionObserver((ents, obs) => { if (ents[0].isIntersecting && !rsStart
   const type = (who) => { typing.textContent = `${who} is typing…`; };
   const quiet = () => { typing.innerHTML = '&nbsp;'; };
   const steps = [[0, () => { hc.classList.add('playing'); hc.classList.remove('approved'); items.forEach((el) => el.classList.remove('show')); quiet(); }],
-    [600, () => show(0)], [1500, () => type('Nova')], [3000, () => { quiet(); show(1); }], [5600, () => type('Priya N.')], [6400, () => { quiet(); show(2); }],
-    [7400, () => type('Nova')], [8800, () => { quiet(); show(3); }], [10600, () => btn.classList.add('press')], [11000, () => { btn.classList.remove('press'); hc.classList.add('approved'); }]];
-  const LOOP = 16000;
+    [600, () => show(0)], [2600, () => type('Nova')], [3800, () => { quiet(); show(1); }], [7600, () => type('Dan K.')], [8400, () => { quiet(); show(2); }],
+    [9400, () => type('Nova')], [10600, () => { quiet(); show(3); }], [12400, () => btn.classList.add('press')], [12800, () => { btn.classList.remove('press'); hc.classList.add('approved'); }]];
+  const LOOP = 18000;
   const run = () => { steps.forEach(([t, fn]) => setTimeout(fn, t)); setTimeout(run, LOOP); };
   hc.classList.add('approved');
   setTimeout(run, 2500);

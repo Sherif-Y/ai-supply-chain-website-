@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Nova in team chat (video recorder)</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* 1080×1080 frame recorded for a LinkedIn video. render(t) draws the exact state at t seconds. */
+:root { --bg: #0d1613; --brand: #0f6b4f; --brand-2: #138a65; --soft: #dcefe7; --ink: #111a17; --ink-2: #4a5752; --ink-3: #7a8782; --line: #dde3e0; --amber: #e29b2f; --amber-soft: #fbefd9; --chip: #3fb68b; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1080px; height: 1080px; overflow: hidden; background: var(--bg); font-family: 'Inter', system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+.stage { position: relative; width: 1080px; height: 1080px; padding: 56px 60px; display: flex; flex-direction: column; gap: 26px; background: radial-gradient(900px 600px at 85% -10%, #173a2e, transparent 60%), var(--bg); }
+.top { display: flex; justify-content: flex-start; align-items: center; }
+.brand { display: flex; align-items: center; gap: 12px; color: #fff; }
+.mark { width: 44px; height: 44px; border-radius: 11px; background: var(--brand); display: grid; place-items: center; font: 800 18px 'Manrope'; color: #fff; }
+.brand b { font: 700 22px 'Manrope'; display: block; }
+.brand small { font-size: 15px; color: #9fb0a9; }
+.pill { font: 600 15px 'Inter'; color: #8fdcbd; border: 1px solid #2b4a3e; border-radius: 999px; padding: 8px 14px; }
+h1 { font: 800 50px/1.08 'Manrope'; color: #fff; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: var(--chip); }
+.win { flex: 1; background: #fff; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 30px 80px rgba(0,0,0,.45); min-height: 0; }
+.wh { display: flex; justify-content: space-between; align-items: center; padding: 18px 26px; border-bottom: 1px solid var(--line); }
+.wh b { font: 700 22px 'Manrope'; }
+.wh span { font-size: 16px; color: var(--ink-3); display: flex; align-items: center; gap: 8px; }
+.wh i { width: 10px; height: 10px; border-radius: 50%; background: var(--brand-2); display: inline-block; }
+.view { position: relative; flex: 1; overflow: hidden; }
+.log { position: absolute; left: 0; right: 0; top: 0; padding: 14px 20px 20px; will-change: transform; }
+.m { display: grid; grid-template-columns: 52px 1fr; gap: 14px; padding: 12px 6px; }
+.ava { width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; color: #fff; font: 700 18px 'Inter'; }
+.who { font-weight: 700; font-size: 20px; }
+.who em { font: normal 600 12px 'Inter'; background: #e7ece9; color: var(--ink-2); padding: 3px 6px; border-radius: 5px; margin-left: 8px; vertical-align: 3px; }
+.who time { font-weight: 400; font-size: 15px; color: var(--ink-3); margin-left: 8px; }
+.tx { font-size: 21px; line-height: 1.45; margin-top: 2px; }
+.mention { background: rgba(19,138,101,.12); color: var(--brand); font-weight: 600; padding: 0 4px; border-radius: 5px; }
+.blk { margin-top: 10px; border-left: 5px solid var(--brand); background: #f6f7f5; border-radius: 0 12px 12px 0; padding: 12px 16px; }
+.blk.warn { border-left-color: var(--amber); }
+.blk h5 { font: 700 17px 'Inter'; margin-bottom: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 19px; }
+.opt tr.h td { font: 600 14px 'Inter'; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); }
+.opt tr:nth-child(3) td { font-weight: 700; }
+td { padding: 8px 6px; border-top: 1px solid var(--line); }
+tr:first-child td { border-top: none; }
+td.n { text-align: right; font-variant-numeric: tabular-nums; }
+.st { font: 600 14px 'Inter'; padding: 4px 10px; border-radius: 999px; background: #fbe3e1; color: #b3261e; }
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 18px; font-size: 19px; }
+.kv span { color: var(--ink-3); }
+.acts { display: flex; gap: 10px; margin-top: 12px; }
+.acts b { font: 600 17px 'Inter'; padding: 9px 16px; border-radius: 9px; border: 1px solid #c9d3cf; background: #fff; }
+.acts b.pri { background: var(--brand); color: #fff; border-color: var(--brand); transition: none; }
+.ok { margin-top: 10px; font: 600 18px 'Inter'; color: var(--brand); background: var(--soft); border-radius: 10px; padding: 10px 14px; }
+.typing { height: 44px; padding: 10px 28px; font-size: 16px; color: var(--ink-3); border-top: 1px solid var(--line); display: flex; align-items: center; gap: 10px; }
+.dots { display: inline-flex; gap: 5px; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); }
+.foot { display: flex; justify-content: space-between; align-items: center; color: #9fb0a9; font-size: 17px; }
+.foot b { color: #fff; font: 700 20px 'Manrope'; }
+/* Intro and outro cards */
+.card { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(900px 600px at 85% -10%, #173a2e, transparent 60%), var(--bg); text-align: center; padding: 80px; }
+.card .in { display: grid; gap: 24px; justify-items: center; }
+.card h2 { font: 800 64px/1.08 'Manrope'; color: #fff; letter-spacing: -0.02em; }
+.card h2 em { font-style: normal; color: var(--chip); }
+.card p { font-size: 26px; color: #c7d4ce; max-width: 760px; line-height: 1.45; }
+.card .url { font: 700 30px 'Manrope'; color: #fff; background: var(--brand); border-radius: 999px; padding: 14px 30px; }
+.card small { font-size: 18px; color: #7d8f87; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="top">
+    <span class="pill">Live demo · sample data</span>
+  </div>
+  <h1>An AI supply planner, <em>inside your team chat.</em></h1>
+  <div class="win">
+    <div class="wh"><b># supply-planning</b><span><i></i>Nova · Supply Planner AI is online</span></div>
+    <div class="view"><div class="log" id="log">
+      <div class="m" data-t="0.6"><span class="ava" style="background:#0f6b4f">N</span><div><div class="who">Nova · Supply Planner AI<em>APP</em><time>8:00 AM</time></div><div class="tx">Heads-up <span class="mention">@Priya</span>: demand for <b>Bluetooth Speaker</b> is running <b>33% above forecast</b>. At this pace, West DC runs out in <b>3 days</b>.</div>
+        <div class="blk warn"><div class="kv"><span>Selling</span><b>40 a day (forecast 30)</b><span>On hand</span><b>120 units</b><span>Runs out</span><b>Oct 15, in 3 days</b></div></div></div></div>
+      <div class="m" data-t="6.0"><span class="ava" style="background:#0f6b4f">N</span><div><div class="who">Nova · Supply Planner AI<em>APP</em><time>8:01 AM</time></div><div class="tx">I recommend a PO to SoundCo for <b>960 units</b>. At their standard 14-day lead time it lands Oct 26, so we'd be <b>out of stock for 11 days</b>. <span class="mention">@Dan</span> can SoundCo expedite production? Options:</div>
+        <div class="blk"><table class="opt"><tr class="h"><td>Option</td><td class="n">Lands</td><td class="n">Out of stock</td><td class="n">Extra cost</td></tr>
+          <tr><td>A · Standard</td><td class="n">Oct 26</td><td class="n">11 days</td><td class="n">none</td></tr>
+          <tr><td>B · Expedited production</td><td class="n">Oct 19</td><td class="n">4 days</td><td class="n">$1,900</td></tr>
+          <tr><td>C · 300 by air, rest standard</td><td class="n">Oct 16</td><td class="n">1 day</td><td class="n">$2,600</td></tr></table></div></div></div>
+      <div class="m" data-t="12.7"><span class="ava" style="background:#c47a12">DK</span><div><div class="who">Dan K.<time>8:09 AM</time></div><div class="tx">Checked with SoundCo: they can expedite. <span class="mention">@Nova</span> go with option B.</div></div></div>
+      <div class="m" data-t="15.6"><span class="ava" style="background:#0f6b4f">N</span><div><div class="who">Nova · Supply Planner AI<em>APP</em><time>8:09 AM</time></div><div class="tx">PO ready for your approval:</div>
+        <div class="blk"><div class="kv"><span>PO-4512</span><b>960 speakers · SoundCo · expedited</b><span>Cost</span><b>$21,120 + $1,900 rush fee</b><span>Lands</span><b>Oct 19</b></div></div>
+        <div class="acts"><b class="pri" id="approve">Approve PO</b><b>Edit</b></div>
+        <div class="ok" id="ok" data-t="19.0">✓ Approved by Dan · PO sent to SoundCo · I'll track daily sales against the new forecast</div></div></div>
+    </div></div>
+    <div class="typing" id="typing"></div>
+  </div>
+  <div class="foot"><span>Alert. Decide. Approve. All in the thread.</span></div>
+</div>
+<script>
+// Typing indicators: [start, end, who]
+const TYPING = [[4.6, 6.0, 'Nova'], [11.5, 12.7, 'Dan K.'], [14.4, 15.6, 'Nova']];
+const PRESS = 18.4, DURATION = 23;
+const msgs = [...document.querySelectorAll('.m')], log = document.getElementById('log'), view = document.querySelector('.view');
+const ease = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : 1 - Math.pow(1 - x, 3));
+let offsets = null;
+function measure() {
+  const vh = view.clientHeight;
+  offsets = msgs.map((m, i) => { const extra = i === msgs.length - 1 ? 70 : 0; return Math.max(0, m.offsetTop + m.offsetHeight + extra + 20 - vh); });
+}
+window.render = function (t) {
+  if (!offsets) measure();
+  let last = -1;
+  msgs.forEach((m, i) => { const k = ease((t - +m.dataset.t) / 0.45); m.style.opacity = k; m.style.transform = `translateY(${(1 - k) * 18}px)`; if (t >= +m.dataset.t) last = i; });
+  let y = 0;
+  if (last >= 0) { const prev = last > 0 ? offsets[last - 1] : 0; y = prev + (offsets[last] - prev) * ease((t - +msgs[last].dataset.t) / 0.6); }
+  log.style.transform = `translateY(${-y}px)`;
+  const ok = document.getElementById('ok'), k2 = ease((t - +ok.dataset.t) / 0.4);
+  ok.style.opacity = k2;
+  const btn = document.getElementById('approve'), p = t - PRESS;
+  btn.style.transform = p > 0 && p < 0.5 ? `scale(${1 - 0.08 * Math.sin(Math.PI * p / 0.5)})` : 'none';
+  btn.style.boxShadow = p > 0 && p < 1.2 ? '0 0 0 6px #dcefe7' : 'none';
+  btn.style.opacity = t > 19.0 ? 0.45 : 1;
+  const ty = TYPING.find(([a, b]) => t >= a && t < b), typing = document.getElementById('typing');
+  if (ty) { const ph = Math.floor(t * 4) % 3; typing.innerHTML = `<span class="dots">${[0, 1, 2].map((d) => `<i style="opacity:${d === ph ? 1 : .3}"></i>`).join('')}</span>${ty[2]} is typing…`; } else typing.innerHTML = '';
+};
+window.DURATION = DURATION;
+document.fonts.ready.then(() => { measure(); window.ready = true; render(0); });
+// Opened normally in a browser, it plays in real time and loops.
+if (!navigator.webdriver && !location.search.includes('record')) { const t0 = performance.now(); (function loop() { if (window.ready) render(((performance.now() - t0) / 1000) % DURATION); requestAnimationFrame(loop); })(); }
+</script>
+</body>
+</html>
