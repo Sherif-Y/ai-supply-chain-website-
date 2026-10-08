@@ -4,6 +4,16 @@ Homepage prototype for Applied Chain (*Practical AI for Supply Chain*): what we 
 
 **Current version: V3** ([`ux-prototype/index-v3.html`](ux-prototype/index-v3.html)). It is content only: no logo, top menu or footer, because it is meant to sit inside a tab of a host website.
 
+## Live site
+
+**https://appliedchain.ai** is served by Netlify from the [`site/`](site/) folder (Publish directory: `site`, no build command). `site/index.html` is generated from the V2 draft:
+
+```bash
+python3 ux-prototype/build-site.py   # V2 → site/index.html, then commit and push
+```
+
+The live copy uses the title "Applied Chain", hides the design notes, and is marked `noindex` (hidden from search engines) until the content is final; set `NOINDEX = False` in `build-site.py` to change that. The contact form uses Netlify Forms (form name `contact`); where submissions are emailed is configured in Netlify, not in the code.
+
 ## Run it
 
 Open the file in a browser. There is nothing to install or build.
