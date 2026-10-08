@@ -1599,7 +1599,7 @@ $('#form').addEventListener('submit', async (e) => {
     if (!res.ok) throw new Error(res.status);
     f.reset(); status.className = 'form-status ok'; status.textContent = "Thanks. We'll reply within one business day.";
   } catch {
-    status.className = 'form-status err'; status.textContent = 'This preview can\'t send messages. The form works on the live site.';
+    status.className = 'form-status err'; status.textContent = /claude\.ai|claudeusercontent|^file:/.test(location.href) || location.protocol === 'file:' ? 'This preview can\'t send messages. The form works on appliedchain.ai.' : 'Sorry, that didn\'t send. Please try again in a minute.';
   } finally { btn.disabled = false; }
 });
 document.addEventListener('click', (e) => { const a = e.target.closest('[data-toast]'); if (a) { e.preventDefault(); toast(a.dataset.toast); } });
