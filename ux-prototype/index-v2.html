@@ -77,6 +77,11 @@ section { padding: 104px 0; position: relative; }
 .hero h1 { font-size: clamp(38px, 5.4vw, 60px); font-weight: 800; }
 .hero h1 em { font-style: normal; color: var(--brand); }
 .hero .lead { margin-top: 22px; }
+.horizons { margin-top: 16px; display: grid; gap: 10px; max-width: 600px; }
+.horizons div { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 14px; align-items: baseline; font-size: 16px; color: var(--ink-2); padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.horizons div:last-child { border-bottom: none; padding-bottom: 0; }
+.horizons b { font: 700 13px var(--font-body); text-transform: uppercase; letter-spacing: .08em; color: var(--brand); }
+@media (max-width: 480px) { .horizons div { grid-template-columns: minmax(0, 1fr); gap: 2px; } }
 .team-line { margin-top: 14px; max-width: 600px; font-size: 16px; color: var(--ink-2); padding-left: 14px; border-left: 2px solid var(--brand); }
 .hero-ctas { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
 .hero-meta { margin-top: 28px; font-size: 14px; color: var(--ink-3); display: flex; gap: 18px; flex-wrap: wrap; }
@@ -373,7 +378,7 @@ svg[data-step="3"] .win-label, svg[data-step="4"] .win-label { opacity: 1; }
 .pv b { display: block; font: 600 11px var(--font-body); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
 .pv .p b { color: #f0a196; }
 .pv .s b { color: #8fdcbd; }
-.wf-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 18px 20px; border-bottom: 1px solid var(--console-line); }
+.wf-cards { display: grid; grid-template-columns: minmax(0, 520px); gap: 12px; padding: 18px 20px; border-bottom: 1px solid var(--console-line); }
 @media (max-width: 860px) { .wf-cards { grid-template-columns: minmax(0, 1fr); } }
 .wf-card { --c: var(--f-rpm); text-align: left; font: inherit; color: inherit; background: var(--console); border: 1px solid var(--console-line); border-radius: 12px; padding: 14px; cursor: pointer; transition: border-color .4s, box-shadow .4s; min-width: 0; }
 .wf-card:hover { border-color: var(--console-ink-2); }
@@ -421,7 +426,7 @@ svg[data-step="3"] .win-label, svg[data-step="4"] .win-label { opacity: 1; }
 .ib .ok { color: #8fdcbd; font-weight: 600; font-size: 12px; }
 .ib.done { opacity: .75; }
 .wf-empty { font-size: 13px; color: var(--console-ink-2); border: 1px dashed var(--console-line); border-radius: 10px; padding: 14px; }
-.wf-roles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 14px 20px 20px; }
+.wf-roles { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 14px 20px 20px; }
 .wf-roles.one { grid-template-columns: minmax(0, 1fr); }
 @media (max-width: 860px) { .wf-roles { grid-template-columns: minmax(0, 1fr); } }
 .rm { --c: var(--f-rpm); border: 1px solid var(--console-line); border-top: 3px solid var(--c); border-radius: 12px; padding: 16px; background: var(--console); animation: rise .45s ease-out both; animation-delay: var(--dl, 0s); }
@@ -435,6 +440,38 @@ svg[data-step="3"] .win-label, svg[data-step="4"] .win-label { opacity: 1; }
 #demo-workforce .panel-foot { border-top: 1px solid var(--console-line); }
 #demo-workforce .panel-foot { flex-wrap: wrap; }
 @media (max-width: 600px) { #demo-workforce .panel-foot .hint { display: none; } #demo-workforce .dots { margin-left: 0; width: 100%; } }
+
+/* Demo: S&OP planner */
+.sop-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); min-height: 600px; }
+@media (max-width: 900px) { .sop-grid { grid-template-columns: minmax(0, 1fr); } }
+.sop-main { padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; border-right: 1px solid var(--console-line); min-width: 0; }
+@media (max-width: 900px) { .sop-main { border-right: none; border-bottom: 1px solid var(--console-line); } }
+.sop-side { padding: 22px 22px 16px; display: flex; flex-direction: column; gap: 12px; background: #101b17; min-width: 0; }
+.sop-side .panel-foot { margin-top: auto; padding: 12px 0 0; border-top: 1px solid var(--console-line); flex-wrap: wrap; }
+.sop-chart svg { width: 100%; height: auto; display: block; }
+.sop-chart text { font: 500 11px var(--font-body); fill: var(--console-ink-2); }
+.sop-chart .v { font: 500 11px var(--font-data); fill: #fff; }
+.sop-chart .gap { font: 700 12px var(--font-body); fill: #f0a196; }
+.note-list { display: grid; gap: 10px; }
+.note-list div { background: var(--console); border: 1px solid var(--console-line); border-radius: 10px; padding: 10px 12px; font-size: 14px; color: var(--console-ink); animation: rise .4s ease-out both; animation-delay: var(--dl, 0s); }
+.note-list b { color: #fff; }
+.note-list .tag { display: inline-block; font: 600 10px var(--font-body); text-transform: uppercase; letter-spacing: .08em; padding: 3px 7px; border-radius: 999px; margin-bottom: 6px; }
+.tag.ai { background: rgba(63,182,139,.15); color: #8fdcbd; }
+.tag.you { background: rgba(226,155,47,.15); color: #f2c27a; }
+.scen { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.scen th { text-align: right; font: 500 11px var(--font-body); text-transform: uppercase; letter-spacing: .05em; color: var(--console-ink-2); padding: 0 8px 8px; }
+.scen th:first-child, .scen td:first-child { text-align: left; }
+.scen td { padding: 9px 8px; border-top: 1px solid var(--console-line); text-align: right; font-family: var(--font-data); color: var(--console-ink); }
+.scen td:first-child { font-family: var(--font-body); color: #fff; }
+.scen tr.pick { cursor: pointer; }
+.scen tr.pick:hover td { background: rgba(255,255,255,.03); }
+.scen tr.sel td { background: rgba(63,182,139,.10); }
+.scen tr.sel td:first-child { box-shadow: inset 3px 0 0 var(--f-rpm); }
+.memo { background: #f6f7f5; color: var(--ink); border-radius: 12px; padding: 18px 20px; font-size: 14.5px; line-height: 1.55; }
+.memo h4 { margin: 0 0 4px; font: 700 16px var(--font-head); }
+.memo .sub { font-size: 12px; color: var(--ink-3); margin-bottom: 10px; }
+.memo ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 4px; }
+.memo .ok { margin-top: 12px; font-weight: 600; color: var(--brand); background: var(--brand-soft); border-radius: 8px; padding: 8px 12px; }
 
 /* Demo 3: agent in team chat */
 .sk-grid { display: grid; grid-template-columns: 190px minmax(0, 1fr) 260px; min-height: 640px; }
@@ -641,14 +678,19 @@ body.notes .note { display: block; }
 <section class="hero">
   <div class="wrap">
     <div>
-      <div class="eyebrow reveal">AI planners for supply chain teams</div>
+      <div class="eyebrow reveal">We build AI for supply chain teams</div>
       <h1 class="reveal" style="--rd:.08s" id="headline">Hire AI planners that <em>keep your supply chain moving.</em></h1>
-      <p class="lead reveal" style="--rd:.16s" id="subhead">AI planners and analysts that work alongside your team, inside the tools you already use. They watch stock, shipments and freight bills, flag what needs attention and prepare the next step.</p>
+      <p class="lead reveal" style="--rd:.16s" id="subhead">AI planners that work alongside your team, inside the tools you already use, at every planning horizon:</p>
+      <div class="horizons reveal" style="--rd:.2s">
+        <div><b>Strategic</b><span>Network, capacity and sourcing scenarios for the months and years ahead.</span></div>
+        <div><b>Tactical</b><span>Monthly demand and supply balancing, inventory targets and S&amp;OP.</span></div>
+        <div><b>Operational</b><span>Daily replenishment, shipments and freight bills: issues flagged, next step prepared.</span></div>
+      </div>
       <div class="hero-ctas reveal" style="--rd:.24s">
         <a class="btn btn-primary" href="#contact">Book a 30-min call <span class="arrow">→</span></a>
         <a class="btn btn-ghost" href="#demo">See the demos</a>
       </div>
-      <div class="hero-meta reveal" style="--rd:.32s"><span>Start with one role in 6–8 weeks</span><span>Works in Slack, Teams, your ERP and TMS</span><span>A person approves every action</span></div>
+      <div class="hero-meta reveal" style="--rd:.32s"><span>Start with one planner in 6–8 weeks</span><span>You set what runs on its own and what needs your sign-off</span></div>
       <div class="note"><b>Design note · Hero.</b> Headline options to compare (click to swap):<br>
         <button class="on" data-h="0">A · Hire AI planners</button><button data-h="1">B · Not another dashboard</button><button data-h="2">C · Team stays in charge</button><br>
         The chat on the right is a short loop of the "AI planner in team chat" demo: Nova flags a demand spike, offers expedite options, Dan picks one and approves.</div>
@@ -682,10 +724,10 @@ body.notes .note { display: block; }
     <p class="lead reveal">Every pilot starts with a baseline and a success measure we agree with you up front, so you see value before you commit to scale.</p>
     <div class="steps" id="steps">
       <div class="steps-line"><i id="stepsFill"></i></div>
-      <div class="step"><div class="num">1</div><h3>Diagnose</h3><div class="when">Weeks 1–2</div><p>Map the decisions that cost you money today and the data behind them.</p><div class="out"><b>You get:</b> ranked opportunities</div></div>
-      <div class="step"><div class="num">2</div><h3>Design</h3><div class="when">Weeks 2–3</div><p>Define the tool, the success metric and how planners will use it day to day.</p><div class="out"><b>You get:</b> pilot spec + KPI baseline</div></div>
-      <div class="step"><div class="num">3</div><h3>Pilot</h3><div class="when">Weeks 3–8</div><p>Build on your data, run it with your team, measure against the baseline.</p><div class="out"><b>You get:</b> working tool + results</div></div>
-      <div class="step"><div class="num">4</div><h3>Scale</h3><div class="when">Ongoing</div><p>Harden what worked, hand over to your team, and pick the next bet.</p><div class="out"><b>You get:</b> production rollout plan</div></div>
+      <div class="step"><div class="num">1</div><h3>Diagnose</h3><p>Map the decisions that cost you money today and the data behind them.</p><div class="out"><b>You get:</b> ranked opportunities</div></div>
+      <div class="step"><div class="num">2</div><h3>Design</h3><p>Define the tool, the success metric and how planners will use it day to day.</p><div class="out"><b>You get:</b> pilot spec + KPI baseline</div></div>
+      <div class="step"><div class="num">3</div><h3>Pilot</h3><p>Build on your data, run it with your team, measure against the baseline.</p><div class="out"><b>You get:</b> working tool + results</div></div>
+      <div class="step"><div class="num">4</div><h3>Scale</h3><p>Harden what worked, hand over to your team, and pick the next bet.</p><div class="out"><b>You get:</b> production rollout plan</div></div>
     </div>
     <div class="measures reveal"><span class="lbl">What we measure, depending on the use case:</span><span>Stock-out days</span><span>Expedite spend</span><span>Inventory turns</span><span>Loaded-mile share</span><span>Planner hours per week</span><span>Forecast accuracy</span></div>
     <div class="note"><b>Design note · Approach.</b> The line fills and each step lights up as you scroll. Step names and weeks are drafts; align them with the offers above.</div>
@@ -700,32 +742,12 @@ body.notes .note { display: block; }
     <p class="lead reveal">Live demos of what we can build. Each one is customized to your data, systems and way of working. Pick one, watch the story, then try it yourself.</p>
     <div class="pick-h reveal">4 live demos. Pick one to watch it run.</div>
     <div class="demo-tabs reveal" role="tablist" aria-label="Choose a demo">
-      <button class="dtab on" data-demo="workforce" role="tab" aria-selected="true"><span class="dn">Demo 1 of 4</span><b>AI workforce</b><span class="dd">Three AI agents for supply, logistics and freight cost, with a person approving each step.</span><span class="go"><span class="play">Watch demo →</span><span class="now">● Now playing</span></span></button>
-      <button class="dtab" data-demo="restock" role="tab" aria-selected="false"><span class="dn">Demo 2 of 4</span><b>Restock agent</b><span class="dd">Daily low-stock alerts, recommended order quantities and instant what-ifs.</span><span class="go"><span class="play">Watch demo →</span><span class="now">● Now playing</span></span></button>
+      <button class="dtab on" data-demo="restock" role="tab" aria-selected="true"><span class="dn">Demo 1 of 4</span><b>Restock agent</b><span class="dd">Daily low-stock alerts, recommended order quantities and instant what-ifs.</span><span class="go"><span class="play">Watch demo →</span><span class="now">● Now playing</span></span></button>
+      <button class="dtab" data-demo="workforce" role="tab" aria-selected="false"><span class="dn">Demo 2 of 4</span><b>AI cost analyst</b><span class="dd">Checks every freight invoice against contract rates and flags overcharges for a person to approve.</span><span class="go"><span class="play">Watch demo →</span><span class="now">● Now playing</span></span></button>
       <button class="dtab" data-demo="slack" role="tab" aria-selected="false"><span class="dn">Demo 3 of 4</span><b>AI planner in team chat</b><span class="dd">Ask, decide and approve a supplier order inside a Slack or Teams thread.</span><span class="go"><span class="play">Watch demo →</span><span class="now">● Now playing</span></span></button>
-      <button class="dtab" data-demo="freight" role="tab" aria-selected="false"><span class="dn">Demo 4 of 4</span><b>Freight matching</b><span class="dd">Find, rank and price the next load for an empty truck.</span><span class="go"><span class="play">Watch demo →</span><span class="now">● Now playing</span></span></button>
+      <button class="dtab" data-demo="sop" role="tab" aria-selected="false"><span class="dn">Demo 4 of 4</span><b>S&amp;OP planner</b><span class="dd">Prepares the monthly S&amp;OP: demand vs supply gap, scenarios and a decision memo.</span><span class="go"><span class="play">Watch demo →</span><span class="now">● Now playing</span></span></button>
     </div>
-    <div id="demo-workforce">
-    <div class="pv"><div class="p"><b>The problem</b>Planners spend much of the day on routine checks across the ERP, TMS and spreadsheets: what's running low, which shipment is late, which invoice is wrong. Issues get found late.</div><div class="s"><b>What it solves</b>Each AI agent takes the routine checks for one role, flags what needs attention and prepares the next step. A person reviews and approves before anything changes.</div></div>
-    <div class="demo-shell reveal">
-      <div class="demo-bar">
-        <div class="title"><span class="live"></span>AI workforce · West DC operations</div>
-        <div class="presets" id="wfClock">Monday 7:00 AM · story mode</div>
-      </div>
-      <div class="wf-cards" id="wfCards"></div>
-      <div class="wf-stephead"><div class="stepno" id="wfStepNo"></div><h3 id="wfTitle"></h3><p id="wfText"></p></div>
-      <div id="wfMain"></div>
-      <div class="panel-foot">
-        <button class="ctl" id="wfPrev" aria-label="Previous step">←</button>
-        <button class="ctl play" id="wfPlay">▶ Play</button>
-        <button class="ctl" id="wfNext" aria-label="Next step">→</button>
-        <span class="hint" style="font-size:12px;color:var(--console-ink-2)">Click an agent to see its role</span>
-        <div class="dots" id="wfDots"></div>
-      </div>
-    </div>
-    <div class="demo-foot"><span>Live demo with sample data and fictional companies. We customize the roles, checks and approval steps to your team.</span><a href="#contact" style="color:#fff">Plan your AI workforce →</a></div>
-    </div>
-    <div id="demo-restock" hidden>
+    <div id="demo-restock">
     <div class="pv"><div class="p"><b>The problem</b>Reorder decisions are rebuilt in spreadsheets every week. Fast sellers run out before new stock lands, and testing a what-if takes hours.</div><div class="s"><b>What it solves</b>A daily nudge lists the SKUs at risk, recommends a quantity with the formula shown, and answers what-ifs on lead time, demand or safety stock in seconds.</div></div>
     <div class="demo-shell reveal">
       <div class="demo-bar">
@@ -752,6 +774,53 @@ body.notes .note { display: block; }
       </div>
     </div>
     <div class="demo-foot"><span>Live demo with sample SKUs. We customize the restock rules, alerts and what-ifs to your catalog and suppliers.</span><a href="#contact" style="color:#fff">Want one for your catalog? →</a></div>
+    </div>
+    <div id="demo-workforce" hidden>
+    <div class="pv"><div class="p"><b>The problem</b>Freight bills arrive by the hundreds. Duplicate invoices, surcharges above contract and unproven fees slip through, and nobody has time to check every line.</div><div class="s"><b>What it solves</b>An AI cost analyst checks every carrier invoice against your contract rates, approves the ones that match and flags overcharges. A person approves any dispute before it is filed.</div></div>
+    <div class="demo-shell reveal">
+      <div class="demo-bar">
+        <div class="title"><span class="live"></span>AI cost analyst · freight invoice audit</div>
+        <div class="presets" id="wfClock">Monday 7:00 AM · story mode</div>
+      </div>
+      <div class="wf-cards" id="wfCards"></div>
+      <div class="wf-stephead"><div class="stepno" id="wfStepNo"></div><h3 id="wfTitle"></h3><p id="wfText"></p></div>
+      <div id="wfMain"></div>
+      <div class="panel-foot">
+        <button class="ctl" id="wfPrev" aria-label="Previous step">←</button>
+        <button class="ctl play" id="wfPlay">▶ Play</button>
+        <button class="ctl" id="wfNext" aria-label="Next step">→</button>
+        <span class="hint" style="font-size:12px;color:var(--console-ink-2)">Click an agent to see its role</span>
+        <div class="dots" id="wfDots"></div>
+      </div>
+    </div>
+    <div class="demo-foot"><span>Live demo with sample data and fictional companies. We customize the checks, contract rules and approval limits to your carriers.</span><a href="#contact" style="color:#fff">Plan your AI workforce →</a></div>
+    </div>
+    <div id="demo-sop" hidden>
+    <div class="pv"><div class="p"><b>The problem</b>Monthly S&amp;OP prep eats a week of spreadsheets: reconciling forecasts, checking supplier and warehouse limits, and building scenarios by hand. Meetings end up debating numbers instead of deciding.</div><div class="s"><b>What it solves</b>An AI S&amp;OP planner builds the consensus demand, checks supply constraints, runs gap-closing scenarios and drafts the decision memo. Your leaders spend the meeting deciding.</div></div>
+    <div class="demo-shell">
+      <div class="demo-bar">
+        <div class="title"><span class="live"></span>AI S&amp;OP planner · Nov–Jan plan · audio accessories</div>
+        <div class="presets">Mid-October · monthly S&amp;OP cycle · story mode</div>
+      </div>
+      <div class="sop-grid">
+        <div class="sop-main">
+          <div class="rs-work-head"><div class="stepno" id="sopStepNo"></div><h3 id="sopTitle"></h3></div>
+          <div class="sop-chart" id="sopChart"></div>
+          <div id="sopBody"></div>
+        </div>
+        <div class="sop-side">
+          <div class="wf-h">AI planner notes</div>
+          <div id="sopNotes"></div>
+          <div class="panel-foot">
+            <button class="ctl" id="sopPrev" aria-label="Previous step">←</button>
+            <button class="ctl play" id="sopPlay">▶ Play</button>
+            <button class="ctl" id="sopNext" aria-label="Next step">→</button>
+            <div class="dots" id="sopDots"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="demo-foot"><span>Live demo with sample data for one product family. We customize the demand inputs, constraints and scenarios to your business.</span><a href="#contact" style="color:#fff">Want an AI S&amp;OP planner? →</a></div>
     </div>
     <div id="demo-freight" hidden>
     <div class="pv"><div class="p"><b>The problem</b>Empty trucks wait while planners scan load boards by hand, and comparing rate, deadhead and fit across dozens of loads is slow.</div><div class="s"><b>What it solves</b>The agent removes loads the truck can't take, ranks the rest with a score anyone can read, and checks the best rate against lane history before the call.</div></div>
@@ -818,7 +887,7 @@ body.notes .note { display: block; }
     </div>
     <div class="demo-foot"><span>Live demo with sample data and fictional companies. We connect it to your chat tool, ERP and approval rules.</span><a href="#contact" style="color:#fff">Want an agent in your team's chat? →</a></div>
     </div>
-    <div class="note"><b>Design note · Demos.</b> Four numbered demo cards make it clear these are separate demos; the selected one says Now playing. Each autoplays when visible; visitors can pause, step, or take over by dragging the sliders or typing a question. Positioned as live demos of what we can build and customize, with sample data noted in the small print. The AI workforce tab leads, kept deliberately simple: one or two use cases per agent, and a person approves every action. Each demo opens with the problem and what it solves. The team-chat demo shows the adoption story: the agent lives where people already work. Decide: which demo leads, and should the freight demo stay at launch?</div>
+    <div class="note"><b>Design note · Demos.</b> Four numbered demo cards make it clear these are separate demos; the selected one says Now playing. Each autoplays when visible; visitors can pause, step, or take over by dragging the sliders or typing a question. Positioned as live demos of what we can build and customize, with sample data noted in the small print. Demo 2 is now a single AI cost analyst with one use case (freight invoice audit); a person approves every dispute. Each demo opens with the problem and what it solves. The team-chat demo shows the adoption story: the agent lives where people already work. Decide: which demo leads, and should the freight demo stay at launch?</div>
   </div>
 </section>
 
@@ -906,7 +975,7 @@ const toast = (msg) => { const t = $('#toast'); t.textContent = msg; t.classList
 
 /* ---------- Content (in the build this lives in Markdown/JSON files) ---------- */
 const HEADLINES = [
-  ['Hire AI planners that <em>keep your supply chain moving.</em>', 'AI planners and analysts that work alongside your team, inside the tools you already use. They watch stock, shipments and freight bills, flag what needs attention and prepare the next step.'],
+  ['Hire AI planners that <em>keep your supply chain moving.</em>', 'AI planners that work alongside your team, inside the tools you already use, at every planning horizon:'],
   ['Add AI planners to your team, <em>not another dashboard.</em>', 'AI supply planners, logistics planners and analysts that work in Slack, Teams and your ERP. They do the routine checks and prepare decisions; your team approves them.'],
   ['Your next supply planner is an AI agent. <em>Your team stays in charge.</em>', 'Hire AI agents for one role at a time: restocking, shipment tracking, freight bill audit. Each one has a clear job, works in your systems and asks a person before anything changes.'],
 ]
@@ -1457,46 +1526,134 @@ $('#skLog').addEventListener('click', (e) => {
   else if (act === 'adjust') { skPause(); $('#skQ').value = '@Nova make it '; $('#skQ').focus(); }
 });
 
+/* ---------- Demo: AI S&OP planner (monthly demand vs supply, scenarios, decision memo) ---------- */
+const SOP = { months: ['Nov', 'Dec', 'Jan'], oldPlan: [2000, 2500, 1400], demand: [2400, 2500, 1500], opening: 400, cap: 2000,
+  price: 49, cost: 22, dcCap: 1300, expediteFee: 3, backupPremium: 0.08, hold: 1 };
+const LEVER_BASE = { uplift: 28, prebuild: 0, expedite: 0, backup: 0 };
+const SCEN = {
+  base: { label: 'No action', l: { ...LEVER_BASE } },
+  A: { label: 'A · Pre-build', l: { uplift: 28, prebuild: 800, expedite: 400, backup: 0 } },
+  B: { label: 'B · Backup supplier', l: { uplift: 28, prebuild: 0, expedite: 400, backup: 600 } },
+  C: { label: 'C · Shape demand', l: { uplift: 0, prebuild: 0, expedite: 400, backup: 0 } },
+};
+let sop = { step: 0, playing: false, timer: null, started: false, scen: 'A', l: { ...SCEN.A.l }, approved: false };
+const pct = (x) => `${(x * 100).toFixed(x > 0.995 ? 0 : 1)}%`;
+function sopPlan(l) {
+  const dem = SOP.demand.map((d, m) => (m === 1 ? Math.round(d * (1 + l.uplift / 100)) : d));
+  let inv = SOP.opening + l.prebuild, peak = inv; const rows = [];
+  dem.forEach((d, m) => { const supply = SOP.cap + (m === 0 ? l.expedite : 0) + (m === 1 ? l.backup : 0), avail = inv + supply, sold = Math.min(avail, d);
+    inv = avail - sold; peak = Math.max(peak, inv); rows.push({ m: SOP.months[m], d, supply, avail, sold, short: d - sold, end: inv }); });
+  const sold = rows.reduce((a, r) => a + r.sold, 0), demand = rows.reduce((a, r) => a + r.d, 0), short = demand - sold;
+  const cost = l.expedite * SOP.expediteFee + l.backup * SOP.cost * SOP.backupPremium + rows.reduce((a, r) => a + r.end, 0) * SOP.hold;
+  return { rows, sold, demand, short, fill: sold / demand, revenue: sold * SOP.price, cost, peak, wc: peak * SOP.cost, dc: peak / SOP.dcCap };
+}
+function sopChart(mode, l) {
+  const p = sopPlan(l), W = 600, H = 250, L = 46, B = 34, T = 22, gw = (W - L - 16) / 3, bw = 46, max = 3600;
+  const Y = (v) => H - B - (v / max) * (H - B - T);
+  let g = '';
+  [0, 1000, 2000, 3000].forEach((v) => { g += `<line x1="${L}" x2="${W - 10}" y1="${Y(v)}" y2="${Y(v)}" stroke="#1f2c27"/><text x="${L - 8}" y="${Y(v) + 4}" text-anchor="end">${v ? n0(v) : '0'}</text>`; });
+  p.rows.forEach((r, i) => {
+    const cx = L + gw * i + gw / 2, x1 = cx - bw - 4, x2 = cx + 4;
+    if (mode === 'demand') {
+      g += `<rect x="${x1}" y="${Y(SOP.oldPlan[i])}" width="${bw}" height="${Y(0) - Y(SOP.oldPlan[i])}" rx="4" fill="#4a5a53"/><text class="v" x="${x1 + bw / 2}" y="${Y(SOP.oldPlan[i]) - 6}" text-anchor="middle" style="fill:#9fb0a9">${n0(SOP.oldPlan[i])}</text>`;
+      g += `<rect x="${x2}" y="${Y(r.d)}" width="${bw}" height="${Y(0) - Y(r.d)}" rx="4" fill="#5b9be0"/><text class="v" x="${x2 + bw / 2}" y="${Y(r.d) - 6}" text-anchor="middle">${n0(r.d)}</text>`;
+    } else g += `<rect x="${x1}" y="${Y(r.d)}" width="${bw}" height="${Y(0) - Y(r.d)}" rx="4" fill="#5b9be0"/><text class="v" x="${x1 + bw / 2}" y="${Y(r.d) - 6}" text-anchor="middle">${n0(r.d)}</text>`;
+    if (mode !== 'demand') g += `<rect x="${x2}" y="${Y(r.avail)}" width="${bw}" height="${Y(0) - Y(r.avail)}" rx="4" fill="#3fb68b"/><text class="v" x="${x2 + bw / 2}" y="${Y(r.avail) - 6}" text-anchor="middle">${n0(r.avail)}</text>`;
+    if (mode !== 'demand' && r.short > 0) g += `<rect x="${x2}" y="${Y(r.d)}" width="${bw}" height="${Y(r.avail) - Y(r.d)}" rx="4" fill="rgba(232,102,90,.25)" stroke="#e8665a" stroke-dasharray="3 3"/><text class="gap" x="${x2 + bw + 6}" y="${Y((r.d + r.avail) / 2) + 4}">${n0(r.short)} short</text>`;
+    g += `<text x="${cx}" y="${H - 12}" text-anchor="middle" style="font-weight:600;fill:#e7eeeb">${r.m}</text>`;
+  });
+  const key = mode === 'demand'
+    ? '<span><i style="background:#4a5a53"></i>Last month\'s plan</span><span><i style="background:#5b9be0"></i>New consensus demand</span>'
+    : '<span><i style="background:#5b9be0"></i>Demand</span><span><i style="background:#3fb68b"></i>Available supply</span><span><i style="background:rgba(232,102,90,.5)"></i>Shortfall</span>';
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Monthly demand versus available supply, November to January">${g}</svg><div class="stack-key">${key}</div>`;
+}
+const sopKpis = (l) => { const p = sopPlan(l), b = sopPlan(LEVER_BASE);
+  return `<div class="kpis"><div><span>Fill rate</span><b>${pct(p.fill)}</b><em>${n0(p.short)} units short</em></div><div><span>Revenue (3 months)</span><b>${money(p.revenue)}</b><em class="${p.revenue >= b.revenue ? 'down' : 'up'}">${p.revenue === b.revenue ? 'no change' : `${p.revenue > b.revenue ? '+' : '−'}${money(Math.abs(p.revenue - b.revenue))} vs no action`}</em></div><div><span>Added cost</span><b>${money(p.cost)}</b><em>expedite, supplier, holding</em></div><div><span>Peak inventory</span><b>${money(p.wc)}</b><em>DC space ${Math.round(p.dc * 100)}% used</em></div></div>`; };
+const sopScenTable = () => `<table class="scen"><thead><tr><th>Scenario</th><th>Fill rate</th><th>Revenue</th><th>Added cost</th><th>Peak inventory</th><th>DC space</th></tr></thead><tbody>
+  ${Object.entries(SCEN).map(([k, s]) => { const p = sopPlan(s.l); return `<tr class="pick${k === sop.scen ? ' sel' : ''}" data-scen="${k}"><td>${s.label}</td><td>${pct(p.fill)}</td><td>${money(p.revenue)}</td><td>${money(p.cost)}</td><td>${money(p.wc)}</td><td>${Math.round(p.dc * 100)}%</td></tr>`; }).join('')}</tbody></table>`;
+const sopSliders = () => { const sl = (k, label, min, max, step, fmt) => `<label class="sl"><span>${label}</span><input type="range" data-lever="${k}" min="${min}" max="${max}" step="${step}" value="${sop.l[k]}"><b data-lv="${k}">${fmt(sop.l[k])}</b></label>`;
+  return `<div class="sliders">${sl('uplift', 'Holiday promo uplift', 0, 40, 1, (v) => v + '%')}${sl('prebuild', 'Pre-build in October', 0, 1200, 100, n0)}${sl('expedite', 'Expedite in November', 0, 400, 100, n0)}${sl('backup', 'Backup supplier, Dec', 0, 800, 100, n0)}</div>`; };
+const sopMemo = () => { const p = sopPlan(SCEN.A.l), b = sopPlan(LEVER_BASE);
+  return `<div class="memo"><h4>S&amp;OP decision memo · audio accessories · Nov–Jan</h4><div class="sub">Drafted by the AI S&amp;OP planner for the executive meeting</div>
+    <p><b>Recommendation: Scenario A, pre-build.</b> Order 800 units in October and expedite 400 in November. Fill rate goes from ${pct(b.fill)} to ${pct(p.fill)}, protecting <b>${money(p.revenue - b.revenue)}</b> of revenue for <b>${money(p.cost)}</b> in added cost.</p>
+    <p style="margin-top:8px"><b>Decisions needed today:</b></p><ol><li>Finance: approve up to ${money(p.wc)} peak inventory.</li><li>Operations: confirm DC West can run at ${Math.round(p.dc * 100)}% space in November.</li><li>Sales: keep the full holiday promo in December.</li></ol>
+    ${sop.approved ? '<div class="ok">✓ Approved in the S&amp;OP meeting · monthly targets published to the ERP</div>' : '<div class="rs-actions" style="margin-top:12px"><button class="btn btn-primary" type="button" data-sopok>Approve plan</button><span class="hint" style="color:var(--ink-3)">The executive team decides in the meeting</span></div>'}</div>`; };
+const NOTE = (tag, html, i = 0) => `<div style="--dl:${i * 0.25}s"><span class="tag ${tag}">${tag === 'ai' ? 'Done by the AI' : 'Your decision'}</span><br>${html}</div>`;
+const SOP_STEPS = [
+  { title: 'Demand review', chart: 'demand', notes: () => [NOTE('ai', 'Pulled the statistical forecast: speakers selling <b>40 a day vs 30</b> planned.', 0), NOTE('ai', 'Added sales input: the <b>holiday promo is confirmed</b> for December.', 1), NOTE('ai', `Consensus demand: <b>December ${n0(sopPlan(LEVER_BASE).rows[1].d)} units</b>, +28% vs last month's plan.`, 2)], body: () => '' },
+  { title: 'Supply review', chart: 'supply', notes: () => [NOTE('ai', `Supplier capacity: <b>${n0(SOP.cap)} units a month</b>, plus 400 if expedited.`, 0), NOTE('ai', `DC West space for this family: <b>${n0(SOP.dcCap)} units</b>.`, 1), NOTE('ai', `Opening inventory on Nov 1: <b>${n0(SOP.opening)} units</b>.`, 2)], body: () => '' },
+  { title: 'The gap', chart: 'supply', notes: () => { const b = sopPlan(LEVER_BASE); return [NOTE('ai', `With no action, <b>December is ${n0(b.rows[1].short)} units short</b>.`, 0), NOTE('ai', `Fill rate drops to <b>${pct(b.fill)}</b>: about <b>${money(sopPlan(SCEN.A.l).revenue - b.revenue)}</b> of revenue at risk.`, 1)]; }, body: () => sopKpis(LEVER_BASE) },
+  { title: 'Scenarios to close the gap', chart: 'scen', notes: () => [NOTE('ai', 'Ran three scenarios against the same constraints. Click a row to compare it on the chart.', 0), NOTE('ai', 'Try the sliders to build your own scenario.', 1), NOTE('you', 'Pick the trade-off: inventory, supplier cost or promo reach.', 2)], body: () => sopScenTable() + sopKpis(sop.l) + sopSliders() },
+  { title: 'Decision memo for the exec meeting', chart: 'scen', notes: () => [NOTE('ai', 'Drafted the memo: recommendation, impact and the decisions needed.', 0), NOTE('you', 'The executive team approves; the AI publishes the monthly targets to the ERP.', 1)], body: () => sopMemo() },
+];
+const SOP_DUR = [8000, 7500, 7500, 11000, 9000];
+$('#sopDots').innerHTML = SOP_STEPS.map((_, i) => `<button aria-label="Step ${i + 1}" data-s="${i}"></button>`).join('');
+function sopRender() {
+  const S = SOP_STEPS[sop.step], l = S.chart === 'scen' ? sop.l : LEVER_BASE;
+  $('#sopStepNo').textContent = `STEP ${sop.step + 1} OF ${SOP_STEPS.length}`;
+  $('#sopTitle').textContent = S.title;
+  $('#sopChart').innerHTML = sopChart(S.chart === 'demand' ? 'demand' : 'supply', l);
+  $('#sopBody').innerHTML = S.body();
+  $('#sopNotes').innerHTML = `<div class="note-list">${S.notes().join('')}</div>`;
+  [...$('#sopDots').children].forEach((d, i) => { d.className = i < sop.step ? 'done' : i === sop.step ? 'cur' : ''; });
+}
+function sopUpdate() { // slider changes: refresh chart, KPIs and table without rebuilding the sliders
+  $('#sopChart').innerHTML = sopChart('supply', sop.l);
+  const k = $('#sopBody .kpis'); if (k) k.outerHTML = sopKpis(sop.l);
+  document.querySelectorAll('#sopBody [data-lv]').forEach((el) => { const v = sop.l[el.dataset.lv]; el.textContent = el.dataset.lv === 'uplift' ? v + '%' : n0(v); });
+  document.querySelectorAll('#sopBody .scen tr.pick').forEach((tr) => tr.classList.toggle('sel', tr.dataset.scen === sop.scen));
+}
+function sopShow(n) {
+  sop.step = n; if (n < 4) sop.approved = false;
+  if (n === 3 || n === 4) { sop.scen = 'A'; sop.l = { ...SCEN.A.l }; }
+  $('#sopDots').style.setProperty('--dur', SOP_DUR[n] + 'ms');
+  sopRender();
+  const cur = $('#sopDots .cur'); if (cur) { cur.style.animation = 'none'; cur.offsetWidth; cur.style.animation = ''; }
+  sopSchedule();
+}
+function sopSchedule() {
+  clearTimeout(sop.timer);
+  $('#sopDots').classList.toggle('paused', !sop.playing);
+  $('#sopPlay').innerHTML = sop.playing ? '❚❚ Pause' : sop.step === SOP_STEPS.length - 1 ? '↻ Replay' : '▶ Play';
+  if (sop.playing && sop.step < SOP_STEPS.length - 1) sop.timer = setTimeout(() => sopShow(sop.step + 1), SOP_DUR[sop.step]);
+  else if (sop.playing) sop.timer = setTimeout(() => { sop.playing = false; sopSchedule(); }, SOP_DUR[sop.step]);
+}
+const sopPause = () => { sop.playing = false; sopSchedule(); };
+$('#sopPrev').onclick = () => { sop.playing = false; sopShow(Math.max(0, sop.step - 1)); };
+$('#sopNext').onclick = () => { sop.playing = false; sopShow(Math.min(SOP_STEPS.length - 1, sop.step + 1)); };
+$('#sopPlay').onclick = () => { if (!sop.playing && sop.step === SOP_STEPS.length - 1) { sop.playing = true; sopShow(0); return; } sop.playing = !sop.playing; sopSchedule(); };
+$('#sopDots').addEventListener('click', (e) => { const d = e.target.closest('button'); if (d) { sop.playing = false; sopShow(+d.dataset.s); } });
+$('#sopBody').addEventListener('input', (e) => { const k = e.target.dataset && e.target.dataset.lever; if (!k) return; sopPause(); sop.l[k] = +e.target.value; sop.scen = Object.keys(SCEN).find((s) => JSON.stringify(SCEN[s].l) === JSON.stringify(sop.l)) || 'custom'; sopUpdate(); });
+$('#sopBody').addEventListener('click', (e) => {
+  const tr = e.target.closest('tr.pick'); if (tr) { sopPause(); sop.scen = tr.dataset.scen; sop.l = { ...SCEN[sop.scen].l }; $('#sopBody').innerHTML = SOP_STEPS[sop.step].body(); sopUpdate(); return; }
+  if (e.target.closest('[data-sopok]')) { sopPause(); sop.approved = true; $('#sopBody').innerHTML = sopMemo(); }
+});
+sopShow(0); sopPause();
+
 /* ----- tabs + autoplay ----- */
 /* ---------- Demo: AI workforce (one role per agent, one or two simple use cases, a person approves) ---------- */
 const WF = {
-  wilson: { name: 'Nova', role: 'Supply Planner', ini: 'N', c: '#3fb68b', job: 'Keeps stock available at the DC',
-    uses: ['Flags SKUs that will run out before a new order can arrive', 'Drafts the reorder with quantity and supplier'],
-    check: 'Every purchase order', systems: ['ERP', 'Supplier portal'] },
-  lena: { name: 'Lena', role: 'Logistics Planner', ini: 'L', c: '#5b9be0', job: 'Keeps shipments on time',
-    uses: ['Spots shipments running late', 'Suggests a fix, such as a new dock appointment'],
-    check: 'Any change to a booking or delivery time', systems: ['TMS', 'Carrier portals'] },
-  arjun: { name: 'Arjun', role: 'Supply Chain Analyst', ini: 'A', c: '#e29b2f', job: 'Keeps freight costs correct',
-    uses: ['Checks carrier invoices against contract rates', 'Flags overcharges and duplicate bills'],
-    check: 'Any dispute or payment hold', systems: ['TMS', 'ERP accounts payable'] },
+  arjun: { name: 'Arjun', role: 'Supply Chain Cost Analyst', ini: 'A', c: '#e29b2f', job: 'Keeps freight costs correct',
+    uses: ['Checks every carrier invoice against contract rates', 'Flags overcharges and duplicate bills'],
+    check: 'Any dispute or payment hold', systems: ['TMS', 'ERP accounts payable', 'Carrier rate contracts'] },
 };
-const WF_HUMANS = { priya: { name: 'Priya N.', ini: 'PN', c: '#8f9cf0' }, sam: { name: 'Sam R.', ini: 'SR', c: '#9fb0a9' }, marco: { name: 'Marco T.', ini: 'MT', c: '#e08fbf' } };
-const WF_KEYS = ['wilson', 'lena', 'arjun'];
+const WF_HUMANS = { marco: { name: 'Marco T.', ini: 'MT', c: '#e08fbf' } };
+const WF_KEYS = ['arjun'];
 const ST_LABEL = { idle: 'Ready', working: 'Working', waiting: 'Waiting on a person', done: 'Done' };
 const WF_APPROVALS = {
-  reorder: { who: 'Priya N. · Inventory manager', what: 'Reorder Bluetooth Speaker and USB-C Cable · 2 draft POs', from: 'wilson',
-    after: [['7:31', 'priya', 'Approved both reorders.'], ['7:31', 'wilson', 'Sent the 2 POs to the suppliers.']] },
-  dock: { who: 'Sam R. · DC supervisor', what: 'Move L-2231 dock appointment to 4:00 PM', from: 'lena',
-    after: [['7:32', 'sam', 'Confirmed 4:00 PM.'], ['7:32', 'lena', 'Updated the appointment in the TMS and told the carrier.']] },
   audit: { who: 'Marco T. · AP manager', what: 'Dispute 3 carrier invoices · $1,240', from: 'arjun',
-    after: [['7:33', 'marco', 'Approved the disputes.'], ['7:33', 'arjun', 'Filed the disputes and put those 3 invoices on hold.']] },
+    after: [['7:33', 'marco', 'Approved the disputes.'], ['7:33', 'arjun', 'Filed the disputes with both carriers and put those 3 invoices on hold. The other 37 are approved for payment.']] },
 };
 const WF_STEPS = [
-  { time: '6:55 AM', title: 'Meet the AI workforce', text: 'Three AI agents, one role each, with one or two simple jobs. Each one prepares the work; a person approves it.', view: 'roles',
-    agents: { wilson: ['idle', 'Starts at 7:00', ['Stock levels']], lena: ['idle', 'Starts at 7:00', ['Shipments']], arjun: ['idle', 'Starts at 7:00', ['Freight invoices']] }, feed: [] },
-  { time: '7:00 AM', title: 'Supply Planner: low stock', text: 'Nova finds two SKUs that will run out before a new order can arrive and drafts the reorders.',
-    agents: { wilson: ['waiting', 'Reorders sent to Priya', ['2 SKUs flagged']], lena: ['working', 'Checking shipments', ['Shipments']], arjun: ['idle', 'Starts invoice check at 7:15', ['Freight invoices']] },
-    feed: [['7:00', 'wilson', '<b>Bluetooth Speaker</b> and <b>USB-C Cable</b> will run out before a new order can arrive. Drafted reorders for both and sent them to Priya to review.']], inbox: ['reorder'] },
-  { time: '7:10 AM', title: 'Logistics Planner: late shipment', text: 'Lena spots a late load and suggests a new dock time. Sam confirms before anything changes.',
-    agents: { wilson: ['waiting', 'Reorders sent to Priya', ['2 SKUs flagged']], lena: ['waiting', 'Dock change sent to Sam', ['1 late load']], arjun: ['working', 'Checking invoices', ['Freight invoices']] },
-    feed: [['7:10', 'lena', 'Shipment <b>L-2231</b> is running 6 hours late. Suggest moving its dock appointment to 4:00 PM. Sent to Sam to confirm.']], inbox: ['dock'] },
-  { time: '7:20 AM', title: 'Analyst: invoice check', text: 'Arjun checks carrier invoices against the contract rates and flags the ones that don\'t match.',
-    agents: { wilson: ['waiting', 'Reorders sent to Priya', ['2 SKUs flagged']], lena: ['waiting', 'Dock change sent to Sam', ['1 late load']], arjun: ['waiting', 'Disputes sent to Marco', ['40 checked', '3 flagged']] },
+  { time: '6:55 AM', title: 'Meet the AI cost analyst', text: 'One agent, one job: check every freight invoice against the contract before it is paid. A person approves any dispute.', view: 'roles',
+    agents: { arjun: ['idle', 'Starts the invoice check at 7:00', ['Freight invoices']] }, feed: [] },
+  { time: '7:20 AM', title: 'Check every invoice', text: 'Arjun compares each carrier invoice with the contract rate and flags the ones that do not match.',
+    agents: { arjun: ['waiting', 'Disputes sent to Marco', ['40 checked', '3 flagged']] },
     feed: [['7:20', 'arjun', 'Checked <b>40 carrier invoices</b> against contract rates. 37 match. <b>3 don\'t</b>, $1,240 in total:<table><tr><td>2 fuel surcharges above contract</td><td class="num">$860</td></tr><tr><td>1 duplicate bill</td><td class="num">$380</td></tr></table>Sent to Marco to review.']], inbox: ['audit'] },
-  { time: '7:30 AM', title: 'People approve, agents follow through', text: 'Three short reviews. Once approved, each agent completes its step and records it.', approve: ['reorder', 'dock', 'audit'],
-    agents: { wilson: ['done', 'POs sent to suppliers', ['2 SKUs flagged']], lena: ['done', 'Appointment updated', ['1 late load']], arjun: ['done', 'Disputes filed', ['40 checked', '3 flagged']] }, feed: [] },
+  { time: '7:30 AM', title: 'A person approves', text: 'Marco reviews and approves. Arjun files the disputes, holds those invoices and releases the rest for payment.', approve: ['audit'],
+    agents: { arjun: ['done', 'Disputes filed · 37 invoices released', ['40 checked', '$1,240 disputed']] }, feed: [] },
 ];
-const WF_DUR = [9000, 7500, 7500, 8000, 9000];
+const WF_DUR = [8000, 9000, 9000];
 let wfStep = 0, wfPlaying = false, wfTimer = null, wfStarted = false, wfView = 'shift', wfUser = new Set(), wfExtra = [];
 $('#wfDots').innerHTML = WF_STEPS.map((_, i) => `<button aria-label="Step ${i + 1}" data-s="${i}"></button>`).join('');
 
@@ -1512,8 +1669,8 @@ function wfApproved(id) { return wfUser.has(id) || WF_STEPS.slice(0, wfStep + 1)
 function wfRenderMain(animate) {
   const m = $('#wfMain'), S = WF_STEPS[wfStep];
   document.querySelectorAll('.wf-card').forEach((c) => c.classList.toggle('sel', c.dataset.k === wfView));
-  if (WF[wfView]) { m.innerHTML = `<button class="wf-back" type="button" data-wfback>← Back to the morning</button><div class="wf-roles one">${roleCard(wfView, 0)}</div>`; return; }
-  if (S.view === 'roles') { m.innerHTML = `<div class="wf-roles">${WF_KEYS.map(roleCard).join('')}</div>`; return; }
+  if (WF[wfView]) { m.innerHTML = `<button class="wf-back" type="button" data-wfback>← Back to the invoice check</button><div class="wf-roles one">${roleCard(wfView, 0)}</div>`; return; }
+  if (S.view === 'roles') { m.innerHTML = `<div class="wf-roles one">${WF_KEYS.map(roleCard).join('')}</div>`; return; }
   const past = WF_STEPS.slice(1, wfStep).flatMap((s) => [...s.feed, ...(s.approve || []).flatMap((id) => WF_APPROVALS[id].after)]);
   const now = [...S.feed, ...(S.approve || []).flatMap((id) => WF_APPROVALS[id].after)];
   const inbox = WF_STEPS.slice(0, wfStep + 1).flatMap((s) => s.inbox || []);
@@ -1559,15 +1716,16 @@ $('#wfMain').addEventListener('click', (e) => {
   const f = $('#wfFeed'); [...f.querySelectorAll('.fe')].slice(-WF_APPROVALS[id].after.length).forEach((el, i) => { el.classList.add('new'); el.style.setProperty('--dl', i * 0.5 + 's'); });
 });
 
-let activeDemo = 'workforce', rsStarted = false;
+let activeDemo = 'restock', rsStarted = false;
 function setDemo(name) {
   activeDemo = name;
   document.querySelectorAll('.dtab').forEach((b) => { b.classList.toggle('on', b.dataset.demo === name); b.setAttribute('aria-selected', b.dataset.demo === name); });
-  ['workforce', 'restock', 'slack', 'freight'].forEach((d) => ($(`#demo-${d}`).hidden = d !== name));
-  rsPause(); skPause(); wfPause(); playing = false; schedule();
+  ['workforce', 'restock', 'slack', 'freight', 'sop'].forEach((d) => ($(`#demo-${d}`).hidden = d !== name));
+  rsPause(); skPause(); wfPause(); sopPause(); playing = false; schedule();
   if (name === 'freight') { playing = !reduce; started = true; svg.dataset.step = 0; requestAnimationFrame(() => show(0)); }
   else if (name === 'slack') { skPlaying = !reduce; skStarted = true; skShow(0); }
   else if (name === 'workforce') { wfPlaying = !reduce; wfStarted = true; wfShow(0); }
+  else if (name === 'sop') { sop.playing = !reduce; sopShow(0); }
   else { rsPlaying = !reduce; rsStarted = true; rsShow(0); }
 }
 document.addEventListener('click', (e) => { const a = e.target.closest('[data-demo-link]'); if (a && a.dataset.demoLink !== activeDemo) setDemo(a.dataset.demoLink); });
