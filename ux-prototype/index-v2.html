@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-/* Prototype V2: full Applied Chain site (header, footer, pilot program, About) with V3's demos. Demos run on sample data. */
+/* Prototype V2: full Applied Chain site (header, footer, About) with V3's demos. Demos run on sample data. */
 :root {
   --bg: #f6f7f5;
   --surface: #ffffff;
@@ -574,17 +574,6 @@ svg[data-step="3"] .win-label, svg[data-step="4"] .win-label { opacity: 1; }
 .measures .lbl { font-size: 14px; color: var(--ink-3); margin-right: 6px; }
 .measures span:not(.lbl) { font: 600 13px var(--font-body); padding: 7px 12px; border-radius: 999px; background: var(--brand-soft); color: var(--brand); }
 
-/* Founding client program */
-.pilot { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.pilot-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 40px; }
-@media (max-width: 800px) { .pilot-grid { grid-template-columns: minmax(0, 1fr); } }
-.pcol { border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 28px; background: var(--bg); }
-.pcol ul { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 15px; color: var(--ink-2); }
-.pcol li { padding-left: 22px; position: relative; }
-.pcol li::before { content: ''; position: absolute; left: 2px; top: 9px; width: 10px; height: 6px; border-left: 2px solid var(--brand); border-bottom: 2px solid var(--brand); transform: rotate(-45deg); }
-.pilot-cta { margin-top: 28px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.pilot-cta span { font-size: 14px; color: var(--ink-3); }
-
 /* About */
 .about .lead { max-width: 760px; }
 .founder { margin-top: 40px; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
@@ -666,7 +655,6 @@ body.notes .note { display: block; }
     <nav class="nav-links">
       <a href="#approach">Approach</a>
       <a href="#demo">Demos</a>
-      <a href="#pilot">Pilot program</a>
       <a href="#about">About</a>
       <a class="btn btn-primary" href="#contact">Book a call</a>
     </nav>
@@ -891,30 +879,6 @@ body.notes .note { display: block; }
   </div>
 </section>
 
-<!-- PILOT PROGRAM -->
-<section class="pilot" id="pilot">
-  <div class="wrap">
-    <div>
-      <div class="eyebrow reveal">Founding client program</div>
-      <h2 class="reveal">Be one of our first three pilot clients.</h2>
-      <p class="lead reveal">We're a new practice with an experienced team. We're looking for three supply chain teams to pilot with, and we'll make it worth being early.</p>
-    </div>
-    <div class="pilot-grid">
-      <div class="pcol reveal"><h3>You get</h3><ul>
-        <li>A reduced fee for the pilot</li>
-        <li>A success measure agreed in writing before we start</li>
-        <li>Our senior team hands-on, not a junior bench</li>
-        <li>Priority input on what we build next</li></ul></div>
-      <div class="pcol reveal" style="--rd:.1s"><h3>We ask</h3><ul>
-        <li>One clear problem and access to the data behind it</li>
-        <li>A planner or buyer who will use the tool weekly</li>
-        <li>A case study once it works; anonymised if you prefer</li></ul></div>
-    </div>
-    <div class="pilot-cta reveal"><a class="btn btn-primary" href="#contact">Apply for a pilot spot <span class="arrow">→</span></a><span>3 spots · 6–8 week pilots</span></div>
-    <div class="note"><b>Design note · Pilot program.</b> Replaces the results section until real pilots are delivered. Decide: the discount level (or "fee credited if we miss the agreed measure"), and whether to show the number of spots. Swap in real cases as pilots finish.</div>
-  </div>
-</section>
-
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="wrap">
@@ -944,7 +908,7 @@ body.notes .note { display: block; }
     <div>
       <div class="eyebrow reveal">Let's talk</div>
       <h2 class="reveal">Bring one painful supply chain decision. Leave with a plan to fix it.</h2>
-      <p class="lead reveal">Tell us about it below and we'll reply within one business day to set up a 30-minute call, no slides. Ask about a founding pilot spot. If AI isn't the right answer, we'll tell you.</p>
+      <p class="lead reveal">Tell us about it below and we'll reply within one business day to set up a 30-minute call, no slides. If AI isn't the right answer, we'll tell you.</p>
     </div>
     <form class="reveal" id="form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="contact">
