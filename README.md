@@ -12,7 +12,7 @@ Homepage prototype for Applied Chain (*Practical AI for Supply Chain*): what we 
 python3 ux-prototype/build-site.py   # V2 → site/index.html, then commit and push
 ```
 
-The live copy uses the title "Applied Chain", hides the design notes, and is marked `noindex` (hidden from search engines) until the content is final; set `NOINDEX = False` in `build-site.py` to change that. The contact form uses Netlify Forms (form name `contact`); where submissions are emailed is configured in Netlify, not in the code.
+The live copy uses the title "Applied Chain", hides the design notes, and adds search and share tags (canonical URL, Open Graph and Twitter cards using `images/og-image.png`, rendered from `ux-prototype/og-card.html`), a favicon, `robots.txt` and `sitemap.xml`. Search engines are allowed; set `NOINDEX = True` in `build-site.py` to hide the site again. The contact form uses Netlify Forms (form name `contact`); where submissions are emailed is configured in Netlify, not in the code.
 
 ## Run it
 
