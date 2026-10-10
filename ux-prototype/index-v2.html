@@ -644,6 +644,86 @@ body.notes .note { display: block; }
   .reveal { opacity: 1; transform: none; }
   .net-flow.reroute { opacity: 1; }
 }
+
+/* ---------- Compact demo area: picker + problem/solution + demo fit a laptop screen ---------- */
+.pick-h { margin-top: 28px; }
+.demo-tabs { margin-top: 10px; gap: 10px; }
+.dtab { padding: 10px 14px; gap: 2px; }
+.dtab .dd { display: none; }
+.dtab b { font-size: 16px; }
+.dtab .go { position: absolute; top: 10px; right: 12px; margin: 0; padding: 0; font-size: 11.5px; }
+.dtab:not(.on) .go .play { opacity: .75; }
+.dtab .go .play { font-size: 0; }
+.dtab .go .play::after { content: 'Watch →'; font-size: 11.5px; }
+.dtab .go .now { font-size: 11.5px; }
+.dtab.on .go .now::after { content: ''; }
+.pv { margin-top: 12px; gap: 10px; }
+.pv div { padding: 9px 14px; font-size: 13.5px; line-height: 1.45; }
+.pv b { display: inline; margin: 0 6px 0 0; font-size: 10.5px; }
+#demo .demo-shell { margin-top: 12px; }
+.demo-bar { padding: 10px 18px; }
+.demo-foot { margin-top: 14px; }
+/* Restock agent */
+.rs-grid { min-height: 0; }
+.rs-work { padding: 16px 20px; gap: 12px; }
+.rs-work-head h3 { font-size: 19px; margin-top: 2px; }
+.hlist { gap: 7px; }
+.hrow { padding: 8px 12px; }
+.hrow .sub { margin-top: 5px; }
+.dtrack { margin-top: 7px; }
+.rs-log { max-height: 330px; min-height: 240px; padding: 14px; }
+.rs-chat-head { padding: 10px 16px; }
+/* Team chat */
+.sk-grid { min-height: 0; }
+.sk-log { max-height: 340px; min-height: 260px; }
+.sk-aside { padding: 16px 18px; gap: 12px; }
+.why-list { gap: 8px; }
+/* Cost analyst */
+.wf-cards { padding: 12px 18px; }
+.wf-card { padding: 10px 12px; }
+.wf-stephead { padding: 12px 18px 0; }
+.wf-body { min-height: 0; }
+.wf-feed, .wf-side { padding: 10px 18px; }
+.wf-feed { max-height: 320px; }
+.wf-roles { padding: 10px 18px 14px; }
+.rs-log { max-height: 236px; min-height: 200px; }
+.rs-suggest, .sk-suggest { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 6px; }
+.rs-suggest::-webkit-scrollbar, .sk-suggest::-webkit-scrollbar { display: none; }
+.rs-suggest .chip, .sk-suggest .chip-l { flex: none; }
+.rs-input { padding: 6px 14px 8px; }
+.rs-chat .panel-foot { padding: 8px 16px; }
+.rs-work .hint { font-size: 11.5px; }
+.sk-log { max-height: 280px; min-height: 230px; }
+.sk-compose { padding-bottom: 10px; }
+.wf-feed { max-height: 250px; }
+.hlist { gap: 6px; }
+.hrow { padding: 7px 12px; }
+.hrow .nm { font-size: 13.5px; }
+.hrow .sub { margin-top: 4px; font-size: 11.5px; }
+.dtrack { margin-top: 6px; height: 6px; }
+.st { padding: 4px 7px; }
+.wf-now { margin-top: 6px; min-height: 0; }
+.wf-m { margin-top: 6px; }
+.wf-stephead p { margin-top: 2px; }
+.sk-log { max-height: 240px; min-height: 210px; }
+/* Cost analyst */
+.ca-log { max-height: 400px !important; min-height: 330px !important; flex: 1; }
+.st-wait { background: var(--console-line); color: var(--console-ink-2); }
+.ca-tab td { padding: 6px 8px; font-size: 13px; }
+.ca-tab td.why { color: #f0a196; font-size: 12px; }
+.ca-tab tr.flag td { background: rgba(232,102,90,.06); }
+.ca-more td { color: var(--console-ink-2); font-size: 12px; }
+.ca-ev { display: grid; gap: 8px; }
+.ca-ev .po .m b { color: #fff; font-weight: 600; }
+.ca-ok { border: 1px solid rgba(63,182,139,.45); background: rgba(63,182,139,.08); border-radius: 12px; padding: 14px 16px; color: #cdeee0; font-size: 14px; }
+.ca-ok b { color: #fff; }
+/* S&OP */
+.sop-grid { min-height: 0; }
+.sop-main { padding: 16px 20px; gap: 10px; }
+.sop-side { padding: 16px 18px 12px; }
+.sop-chart svg { max-height: 210px; }
+.note-list { gap: 8px; }
+.note-list div { padding: 8px 11px; font-size: 13.5px; }
 </style>
 </head>
 <body>
@@ -768,17 +848,23 @@ body.notes .note { display: block; }
     <div class="demo-shell reveal">
       <div class="demo-bar">
         <div class="title"><span class="live"></span>AI cost analyst · freight invoice audit</div>
-        <div class="presets" id="wfClock">Monday 7:00 AM · story mode</div>
+        <div class="presets" id="wfClock">Monday 6:55 AM · story mode</div>
       </div>
-      <div class="wf-cards" id="wfCards"></div>
-      <div class="wf-stephead"><div class="stepno" id="wfStepNo"></div><h3 id="wfTitle"></h3><p id="wfText"></p></div>
-      <div id="wfMain"></div>
-      <div class="panel-foot">
-        <button class="ctl" id="wfPrev" aria-label="Previous step">←</button>
-        <button class="ctl play" id="wfPlay">▶ Play</button>
-        <button class="ctl" id="wfNext" aria-label="Next step">→</button>
-        <span class="hint" style="font-size:12px;color:var(--console-ink-2)">Click an agent to see its role</span>
-        <div class="dots" id="wfDots"></div>
+      <div class="rs-grid">
+        <div class="rs-work">
+          <div class="rs-work-head"><div class="stepno" id="wfStepNo"></div><h3 id="wfTitle"></h3></div>
+          <div id="caWork"></div>
+        </div>
+        <div class="rs-chat">
+          <div class="rs-chat-head"><span class="live"></span><b>Arjun · Cost Analyst AI</b> with Marco T., AP manager</div>
+          <div class="rs-log ca-log" id="caLog" aria-live="polite"></div>
+          <div class="panel-foot">
+            <button class="ctl" id="wfPrev" aria-label="Previous step">←</button>
+            <button class="ctl play" id="wfPlay">▶ Play</button>
+            <button class="ctl" id="wfNext" aria-label="Next step">→</button>
+            <div class="dots" id="wfDots"></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="demo-foot"><span>Live demo with sample data and fictional companies. We customize the checks, contract rules and approval limits to your carriers.</span><a href="#contact" style="color:#fff">Plan your AI workforce →</a></div>
@@ -1595,70 +1681,56 @@ $('#sopBody').addEventListener('click', (e) => {
 sopShow(0); sopPause();
 
 /* ----- tabs + autoplay ----- */
-/* ---------- Demo: AI workforce (one role per agent, one or two simple use cases, a person approves) ---------- */
-const WF = {
-  arjun: { name: 'Arjun', role: 'Supply Chain Cost Analyst', ini: 'A', c: '#e29b2f', job: 'Keeps freight costs correct',
-    uses: ['Checks every carrier invoice against contract rates', 'Flags overcharges and duplicate bills'],
-    check: 'Any dispute or payment hold', systems: ['TMS', 'ERP accounts payable', 'Carrier rate contracts'] },
-};
-const WF_HUMANS = { marco: { name: 'Marco T.', ini: 'MT', c: '#e08fbf' } };
-const WF_KEYS = ['arjun'];
-const ST_LABEL = { idle: 'Ready', working: 'Working', waiting: 'Waiting on a person', done: 'Done' };
-const WF_APPROVALS = {
-  audit: { who: 'Marco T. · AP manager', what: 'Dispute 3 carrier invoices · $1,240', from: 'arjun',
-    after: [['7:33', 'marco', 'Approved the disputes.'], ['7:33', 'arjun', 'Filed the disputes with both carriers and put those 3 invoices on hold. The other 37 are approved for payment.']] },
-};
-const WF_STEPS = [
-  { time: '6:55 AM', title: 'Meet the AI cost analyst', text: 'One agent, one job: check every freight invoice against the contract before it is paid. A person approves any dispute.', view: 'roles',
-    agents: { arjun: ['idle', 'Starts the invoice check at 7:00', ['Freight invoices']] }, feed: [] },
-  { time: '7:20 AM', title: 'Check every invoice', text: 'Arjun compares each carrier invoice with the contract rate and flags the ones that do not match.',
-    agents: { arjun: ['waiting', 'Disputes sent to Marco', ['40 checked', '3 flagged']] },
-    feed: [['7:20', 'arjun', 'Checked <b>40 carrier invoices</b> against contract rates. 37 match. <b>3 don\'t</b>, $1,240 in total:<table><tr><td>2 fuel surcharges above contract</td><td class="num">$860</td></tr><tr><td>1 duplicate bill</td><td class="num">$380</td></tr></table>Sent to Marco to review.']], inbox: ['audit'] },
-  { time: '7:30 AM', title: 'A person approves', text: 'Marco reviews and approves. Arjun files the disputes, holds those invoices and releases the rest for payment.', approve: ['audit'],
-    agents: { arjun: ['done', 'Disputes filed · 37 invoices released', ['40 checked', '$1,240 disputed']] }, feed: [] },
+/* ---------- Demo: AI cost analyst (freight invoice audit; same layout as the Restock agent) ---------- */
+const CA_INV = [
+  { id: 'INV-20431', carrier: 'Ridgeline Freight', lane: 'Reno → West DC', billed: 2140, contract: 2140 },
+  { id: 'INV-20433', carrier: 'Ridgeline Freight', lane: 'Sacramento → West DC', billed: 1980, contract: 1550, why: 'Fuel surcharge 38%, contract 18%' },
+  { id: 'INV-20434', carrier: 'Summit Haul', lane: 'Portland → West DC', billed: 2760, contract: 2760 },
+  { id: 'INV-20435', carrier: 'Coastline Carriers', lane: 'Fresno → West DC', billed: 1890, contract: 1460, why: 'Fuel surcharge 38%, contract 18%' },
+  { id: 'INV-20437', carrier: 'Coastline Carriers', lane: 'Los Angeles → West DC', billed: 380, contract: 0, why: 'Duplicate of INV-20398' },
+  { id: 'INV-20438', carrier: 'Ridgeline Freight', lane: 'Reno → West DC', billed: 2140, contract: 2140 },
 ];
-const WF_DUR = [8000, 9000, 9000];
-let wfStep = 0, wfPlaying = false, wfTimer = null, wfStarted = false, wfView = 'shift', wfUser = new Set(), wfExtra = [];
+const CA_FLAGS = CA_INV.filter((x) => x.why), CA_OVER = CA_FLAGS.reduce((a, x) => a + x.billed - x.contract, 0);
+const caTable = (checked) => `<table class="rtab ca-tab"><thead><tr><th>Invoice</th><th>Carrier · lane</th><th class="num">Billed</th><th class="num">Contract</th><th>Status</th></tr></thead><tbody>
+  ${CA_INV.map((x) => `<tr class="${checked && x.why ? 'flag' : ''}"><td class="nm">${x.id}</td><td>${x.carrier}<small style="display:block;color:var(--console-ink-2);font-size:11.5px">${x.lane}</small></td><td class="num">${money(x.billed)}</td><td class="num">${checked ? (x.contract ? money(x.contract) : '—') : '…'}</td>
+    <td>${!checked ? '<span class="st st-wait">Not checked</span>' : x.why ? `<span class="st st-crit">Flagged</span><div class="why" style="color:#f0a196;font-size:11.5px;margin-top:3px">${x.why}</div>` : '<span class="st st-ok">Matches</span>'}</td></tr>`).join('')}
+  <tr class="ca-more"><td colspan="5">+ 34 more invoices ${checked ? '· all match the contract' : '· waiting'}</td></tr></tbody></table>`;
+const caKpis = () => `<div class="kpis"><div><span>Checked</span><b>40</b><em>overnight invoices</em></div><div><span>Match contract</span><b>37</b><em class="down">approved for payment</em></div><div><span>Flagged</span><b>${CA_FLAGS.length}</b><em class="up">need a person</em></div><div><span>Overcharges</span><b>${money(CA_OVER)}</b><em>2 carriers</em></div></div>`;
+const caEvidence = (approved) => `<div class="ca-ev">${CA_FLAGS.map((x) => `<div class="po"><span class="h">${x.id} · ${x.carrier}</span><span class="amt">${money(x.billed - x.contract)}</span>
+  <span class="m">${x.why}. ${x.contract ? `Billed <b>${money(x.billed)}</b>, contract total <b>${money(x.contract)}</b>.` : `Same load, date and amount as INV-20398, already paid.`}</span><span class="m">${approved ? 'Dispute filed' : 'Evidence attached'}</span></div>`).join('')}</div>
+  ${approved ? '' : `<div class="rs-actions"><button class="btn btn-primary" type="button" data-caok>Approve ${CA_FLAGS.length} disputes · ${money(CA_OVER)}</button><span class="hint">Nothing is filed until Marco approves.</span></div>`}`;
+const caDone = () => `<div class="ca-ok"><b>✓ Done by 7:30 AM.</b> ${CA_FLAGS.length} disputes filed with Ridgeline Freight and Coastline Carriers (${money(CA_OVER)}). Those invoices are on hold; the other <b>37 are released for payment</b>.</div>${caKpis()}`;
+const caMsg = (who, html) => `<div class="msg ${who === 'arjun' ? 'agent' : 'user'}"><span class="av" style="${who === 'arjun' ? 'background:#e29b2f;color:#0d1613' : 'background:#e08fbf;color:#0d1613'}">${who === 'arjun' ? 'A' : 'MT'}</span><div class="bub">${html}</div></div>`;
+const MARCO = '<span class="mention" style="background:rgba(63,182,139,.15);color:#8fdcbd;padding:0 3px;border-radius:4px">@Marco</span>';
+const WF_STEPS = [
+  { time: '6:55 AM', title: 'Invoices arrive', work: () => caTable(false),
+    msgs: [['arjun', 'Good morning. <b>40 carrier invoices</b> arrived overnight. I\'m checking each one against the contract rates before anything is paid.']] },
+  { time: '7:20 AM', title: 'Check every invoice', work: () => caTable(true),
+    msgs: [['arjun', `Checked all 40. <b>37 match</b> the contract and are approved for payment. <b>${CA_FLAGS.length} don't</b>, ${money(CA_OVER)} in total. ${MARCO} these need your review.`]] },
+  { time: '7:24 AM', title: 'Review the evidence', work: () => caEvidence(false),
+    msgs: [['marco', 'What\'s wrong with the two fuel charges?'], ['arjun', 'Both bill fuel at <b>38% of linehaul</b>; your contracts with Ridgeline and Coastline cap it at <b>18%</b>. The third is a duplicate of an invoice we already paid. Evidence is attached to each.']] },
+  { time: '7:30 AM', title: 'A person approves', approved: true, work: () => caDone(),
+    msgs: [['marco', 'Approved. File them.'], ['arjun', `Done: ${CA_FLAGS.length} disputes filed with both carriers and those invoices put on hold. The other 37 are released for payment.`]] },
+];
+const WF_DUR = [6500, 9000, 9500, 8500];
+let wfStep = 0, wfPlaying = false, wfTimer = null, wfStarted = false, caGen = 0;
 $('#wfDots').innerHTML = WF_STEPS.map((_, i) => `<button aria-label="Step ${i + 1}" data-s="${i}"></button>`).join('');
-
-const wfWho = (k) => WF[k] || WF_HUMANS[k];
-const feEl = ([t, k, html], fresh, i) => { const p = wfWho(k); return `<div class="fe${fresh ? ' new' : ''}" style="--c:${p.c};--dl:${fresh ? i * 0.6 : 0}s"><time>${t}</time><span class="dt">${p.ini}</span><div class="tx">${html}</div></div>`; };
-const roleCard = (k, i) => { const a = WF[k];
-  return `<div class="rm" style="--c:${a.c};--dl:${i * 0.15}s"><div class="wf-top"><span class="wf-av" style="--c:${a.c}">${a.ini}</span><div><div class="wf-nm">${a.name}</div><div class="wf-role">${a.role} · ${a.job}</div></div></div>
-    <div class="cols"><div><h5>What it does</h5><ul>${a.uses.map((x) => `<li>${x}</li>`).join('')}</ul></div>
-    <div><h5>A person approves</h5><ul><li>${a.check}</li></ul></div>
-    <div><h5>Works in</h5><div class="chips">${a.systems.map((x) => `<span>${x}</span>`).join('')}</div></div></div></div>`; };
-
-function wfApproved(id) { return wfUser.has(id) || WF_STEPS.slice(0, wfStep + 1).some((s) => (s.approve || []).includes(id)); }
-function wfRenderMain(animate) {
-  const m = $('#wfMain'), S = WF_STEPS[wfStep];
-  document.querySelectorAll('.wf-card').forEach((c) => c.classList.toggle('sel', c.dataset.k === wfView));
-  if (WF[wfView]) { m.innerHTML = `<button class="wf-back" type="button" data-wfback>← Back to the invoice check</button><div class="wf-roles one">${roleCard(wfView, 0)}</div>`; return; }
-  if (S.view === 'roles') { m.innerHTML = `<div class="wf-roles one">${WF_KEYS.map(roleCard).join('')}</div>`; return; }
-  const past = WF_STEPS.slice(1, wfStep).flatMap((s) => [...s.feed, ...(s.approve || []).flatMap((id) => WF_APPROVALS[id].after)]);
-  const now = [...S.feed, ...(S.approve || []).flatMap((id) => WF_APPROVALS[id].after)];
-  const inbox = WF_STEPS.slice(0, wfStep + 1).flatMap((s) => s.inbox || []);
-  m.innerHTML = `<div class="wf-body"><div class="wf-feed" id="wfFeed"><div class="wf-h">Activity</div>${past.map((e) => feEl(e, false)).join('')}${now.map((e, i) => feEl(e, animate, i)).join('')}${wfExtra.map((e, i) => feEl(e, true, i)).join('')}</div>
-    <div class="wf-side"><div class="wf-h">Needs a person</div>${inbox.map((id) => { const a = WF_APPROVALS[id], ok = wfApproved(id);
-      return `<div class="ib${ok ? ' done' : ''}"><div class="who">For ${a.who}</div><div class="what">${a.what}</div><div class="row"><span class="from">From ${WF[a.from].name}, ${WF[a.from].role}</span>${ok ? '<span class="ok">✓ Approved</span>' : `<button class="ib-ok" type="button" data-wfok="${id}">Approve</button>`}</div></div>`; }).join('')}</div></div>`;
-  const f = $('#wfFeed'); f.scrollTop = f.scrollHeight;
-}
-function wfRenderCards() {
-  const S = WF_STEPS[wfStep];
-  $('#wfCards').innerHTML = WF_KEYS.map((k) => { const a = WF[k], [st, now, ms] = S.agents[k];
-    return `<button class="wf-card ${st}" type="button" data-k="${k}" style="--c:${a.c}" aria-label="${a.name}, ${a.role}: show role"><div class="wf-top"><span class="wf-av">${a.ini}</span><div><div class="wf-nm">${a.name}</div><div class="wf-role">${a.role}</div></div><span class="wf-st ${st}">${ST_LABEL[st]}</span></div>
-      <div class="wf-now">${now}</div><div class="wf-m">${ms.map((x) => `<span>${x}</span>`).join('')}</div></button>`; }).join('');
-}
-function wfShow(n, animate = true) {
-  wfStep = n; wfView = 'shift'; wfUser = new Set(); wfExtra = [];
-  const S = WF_STEPS[n];
+async function wfShow(n, animate = true) {
+  wfStep = n; const g = ++caGen, S = WF_STEPS[n];
   $('#wfClock').textContent = `Monday ${S.time} · story mode`;
   $('#wfStepNo').textContent = `STEP ${n + 1} OF ${WF_STEPS.length} · ${S.time}`;
-  $('#wfTitle').textContent = S.title; $('#wfText').textContent = S.text;
+  $('#wfTitle').textContent = S.title;
+  $('#caWork').innerHTML = S.work();
   [...$('#wfDots').children].forEach((d, i) => { d.className = i < n ? 'done' : i === n ? 'cur' : ''; });
   $('#wfDots').style.setProperty('--dur', WF_DUR[n] + 'ms');
   const cur = $('#wfDots .cur'); if (cur) { cur.style.animation = 'none'; cur.offsetWidth; cur.style.animation = ''; }
-  wfRenderCards(); wfRenderMain(animate); wfSchedule();
+  wfSchedule();
+  const log = $('#caLog');
+  log.innerHTML = WF_STEPS.slice(0, n).flatMap((x) => x.msgs).map(([w, h]) => caMsg(w, h)).join('');
+  for (const [w, h] of S.msgs) {
+    if (animate) { await wait(w === 'arjun' ? 900 : 500); if (g !== caGen) return; }
+    log.insertAdjacentHTML('beforeend', caMsg(w, h)); log.scrollTop = log.scrollHeight;
+  }
 }
 function wfSchedule() {
   clearTimeout(wfTimer);
@@ -1672,13 +1744,7 @@ $('#wfPrev').onclick = () => { wfPlaying = false; wfShow(Math.max(0, wfStep - 1)
 $('#wfNext').onclick = () => { wfPlaying = false; wfShow(Math.min(WF_STEPS.length - 1, wfStep + 1)); };
 $('#wfPlay').onclick = () => { if (!wfPlaying && wfStep === WF_STEPS.length - 1) { wfPlaying = true; wfShow(0); return; } wfPlaying = !wfPlaying; wfSchedule(); };
 $('#wfDots').addEventListener('click', (e) => { const d = e.target.closest('button'); if (d) { wfPlaying = false; wfShow(+d.dataset.s, false); } });
-$('#wfCards').addEventListener('click', (e) => { const c = e.target.closest('.wf-card'); if (!c) return; wfPause(); wfView = wfView === c.dataset.k ? 'shift' : c.dataset.k; wfRenderMain(false); });
-$('#wfMain').addEventListener('click', (e) => {
-  if (e.target.closest('[data-wfback]')) { wfView = 'shift'; wfRenderMain(false); return; }
-  const b = e.target.closest('[data-wfok]'); if (!b) return;
-  wfPause(); const id = b.dataset.wfok; wfUser.add(id); wfExtra.push(...WF_APPROVALS[id].after); wfRenderMain(false);
-  const f = $('#wfFeed'); [...f.querySelectorAll('.fe')].slice(-WF_APPROVALS[id].after.length).forEach((el, i) => { el.classList.add('new'); el.style.setProperty('--dl', i * 0.5 + 's'); });
-});
+$('#caWork').addEventListener('click', (e) => { if (e.target.closest('[data-caok]')) { wfPlaying = false; wfShow(WF_STEPS.length - 1); } });
 
 let activeDemo = 'restock', rsStarted = false;
 function setDemo(name) {
@@ -1693,7 +1759,17 @@ function setDemo(name) {
   else { rsPlaying = !reduce; rsStarted = true; rsShow(0); }
 }
 document.addEventListener('click', (e) => { const a = e.target.closest('[data-demo-link]'); if (a && a.dataset.demoLink !== activeDemo) setDemo(a.dataset.demoLink); });
-document.querySelector('.demo-tabs').addEventListener('click', (e) => { const b = e.target.closest('.dtab'); if (b && b.dataset.demo !== activeDemo) setDemo(b.dataset.demo); });
+document.querySelector('.demo-tabs').addEventListener('click', (e) => {
+  const b = e.target.closest('.dtab'); if (!b) return;
+  if (b.dataset.demo !== activeDemo) setDemo(b.dataset.demo);
+  // Scroll so the chosen demo (problem/solution box + demo) fills the screen below the menu bar.
+  // On tall screens the cards stay in view; on laptops they sit just above.
+  const nav = $('#nav') ? $('#nav').offsetHeight : 0, pick = $('.pick-h'), pv = $(`#demo-${b.dataset.demo} .pv`);
+  const block = $(`#demo-${b.dataset.demo}`).getBoundingClientRect().bottom - pick.getBoundingClientRect().top;
+  const anchor = block <= innerHeight - nav - 16 ? pick : pv;
+  const top = anchor.getBoundingClientRect().top + scrollY - nav - 8;
+  scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+});
 skShow(0, false);
 rsShow(0, false);
 wfShow(0, false);
